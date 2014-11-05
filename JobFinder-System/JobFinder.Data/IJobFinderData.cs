@@ -12,11 +12,11 @@ namespace JobFinder.Data
     {
         IRepository<User> Users { get; }
 
-        //IRepository<Game> Games { get; }
+        IRepository<Person> People { get; }
 
-       // IRepository<Guess> Guesses { get; }
+        IRepository<Company> Companies { get; }
 
-        //IRepository<Notification> Notifications { get; }
+        IRepository<BusinessSector> BusinessSectors { get; }
 
         void SaveChanges();
     }

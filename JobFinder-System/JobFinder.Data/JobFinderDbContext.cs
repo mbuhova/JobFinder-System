@@ -22,5 +22,11 @@ namespace JobFinder.Data
         {
             return new JobFinderDbContext();
         }
+
+        public IDbSet<BusinessSector> BusinessSectors { get; set; }
+
+        public IDbSet<Person> People { get; set; }
+
+        public IDbSet<Company> Companies { get; set; }
     }
 }

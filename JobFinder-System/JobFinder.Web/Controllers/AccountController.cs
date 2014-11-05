@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using JobFinder.Web.Models;
 using JobFinder.Models;
+using System.Collections.Generic;
+using JobFinder.Data;
 
 namespace JobFinder.Web.Controllers
 {
@@ -18,8 +20,11 @@ namespace JobFinder.Web.Controllers
     {
         private ApplicationUserManager _userManager;
 
+        private IJobFinderData data;
+
         public AccountController()
         {
+            this.data = new JobFinderData(new JobFinderDbContext());
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -146,6 +151,52 @@ namespace JobFinder.Web.Controllers
             return View();
         }
 
+        //mine
+        // GET: /Account/RegisterCompany
+        [AllowAnonymous]
+        public ActionResult RegisterCompany()
+        {
+            ViewBag.Sectors = this.data.BusinessSectors.All();
+            return View();
+        }
+
+        //
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterCompany(RegisterCompanyViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new Company() { UserName = model.Email, Email = model.Email };
+              
+
+                //var user = new User { UserName = model.Email, Email = model.Email };
+               // user.Company = new Company();
+                user.Bulstat = model.Bulstat;
+                user.CompanyName = model.CompanyName;
+                user.PhoneNumber = model.Phone;
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
         //
         // POST: /Account/Register
         [HttpPost]
@@ -155,7 +206,10 @@ namespace JobFinder.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new Person { UserName = model.Email, Email = model.Email };
+                //user.Person = new Person();
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

@@ -26,10 +26,20 @@ namespace JobFinder.Data
             get { return this.GetRepository<User>(); }
         }
 
-        /*public IRepository<Game> Games
+        public IRepository<Person> People
         {
-            get { return this.GetRepository<Game>(); }
-        }*/
+            get { return this.GetRepository<Person>(); }
+        }
+
+        public IRepository<Company> Companies
+        {
+            get { return this.GetRepository<Company>(); }
+        }
+
+        public IRepository<BusinessSector> BusinessSectors
+        {
+            get { return this.GetRepository<BusinessSector>(); }
+        }
 
         public void SaveChanges()
         {

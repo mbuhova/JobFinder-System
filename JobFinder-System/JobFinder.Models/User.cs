@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations;
 
 namespace JobFinder.Models
 {
@@ -18,7 +19,12 @@ namespace JobFinder.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
+            //this.BusinessSectors = new HashSet<BusinessSector>();
             return userIdentity;
         }
+
+        //public virtual Person Person { get; set; }
+
+       // public virtual Company Company { get; set; }
     }
 }
