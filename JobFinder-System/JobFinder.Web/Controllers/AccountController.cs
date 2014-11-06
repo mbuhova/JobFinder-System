@@ -16,15 +16,13 @@ using JobFinder.Data;
 namespace JobFinder.Web.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationUserManager _userManager;
 
-        private IJobFinderData data;
 
-        public AccountController()
+        public AccountController() : base()
         {
-            this.data = new JobFinderData(new JobFinderDbContext());
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -156,7 +154,7 @@ namespace JobFinder.Web.Controllers
         [AllowAnonymous]
         public ActionResult RegisterCompany()
         {
-            ViewBag.Sectors = this.data.BusinessSectors.All();
+            ViewBag.OriginalSectors = this.data.BusinessSectors.All();
             return View();
         }
 
@@ -169,32 +167,90 @@ namespace JobFinder.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Company() { UserName = model.Email, Email = model.Email };
-              
+                bool isBulstatValid = ValidateBulstat(model.Bulstat);
+                bool isNameValid = ValidateCompanyName(model.CompanyName);
 
-                //var user = new User { UserName = model.Email, Email = model.Email };
-               // user.Company = new Company();
-                user.Bulstat = model.Bulstat;
-                user.CompanyName = model.CompanyName;
-                user.PhoneNumber = model.Phone;
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                if (!isBulstatValid)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.BulstatErrorMessage = "This bulstat is already taken. Bulstat should be unique.";
                 }
-                AddErrors(result);
+                else if (!isNameValid)
+                {
+                    ViewBag.NameErrorMessage = "This company name is already taken. Company name should be unique.";                   
+                }
+                else
+                {
+                    var user = new Company() { UserName = model.Email, Email = model.Email };
+
+                    user.Bulstat = model.Bulstat;
+                    user.CompanyName = model.CompanyName;
+                    user.PhoneNumber = model.Phone;
+
+                    var result = await UserManager.CreateAsync(user, model.Password);                    
+                    if (result.Succeeded)
+                    {
+                        AddBusinessSectors(model.SelectedIds, user.Id);
+
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                    AddErrors(result);
+                }              
             }
 
             // If we got this far, something failed, redisplay form
+            ViewBag.OriginalSectors = this.data.BusinessSectors.All();
             return View(model);
+        }
+
+        private bool ValidateCompanyName(string name)
+        {
+            var userInDatabase = this.data.Companies.All().FirstOrDefault(c => c.CompanyName == name);
+
+            if (userInDatabase == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool ValidateBulstat(string bulstat)
+        {
+            var userInDatabase = this.data.Companies.All().FirstOrDefault(c => c.Bulstat == bulstat);
+
+            if (userInDatabase == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void AddBusinessSectors(int[] sectorIds, string userId)
+        {
+            var sectorsToAdd = new List<BusinessSector>();
+
+            foreach (var id in sectorIds)
+            {
+                var sector = this.data.BusinessSectors.Find(id);
+                sectorsToAdd.Add(sector);
+            }
+
+            var user = this.data.Companies.Find(userId);
+            user.BusinessSectors = sectorsToAdd;
+            this.data.SaveChanges();
         }
 
         //
@@ -207,7 +263,6 @@ namespace JobFinder.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = new Person { UserName = model.Email, Email = model.Email };
-                //user.Person = new Person();
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 var result = await UserManager.CreateAsync(user, model.Password);

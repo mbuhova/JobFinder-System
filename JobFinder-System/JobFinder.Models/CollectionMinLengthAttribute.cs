@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace JobFinder.Models
 {
-    class CollectionMaxLengthAttribute : ValidationAttribute
+    public class CollectionMinLengthAttribute : ValidationAttribute
     {
         private int count;
 
-        public CollectionMaxLengthAttribute(int count)
+        public CollectionMinLengthAttribute(int count)
         {
             if (count < 0)
             {

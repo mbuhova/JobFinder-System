@@ -52,6 +52,7 @@ namespace JobFinder.Web
                 RequireUniqueEmail = true
             };
 
+
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {

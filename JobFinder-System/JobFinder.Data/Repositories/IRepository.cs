@@ -12,6 +12,8 @@ namespace JobFinder.Data.Repositories
 
         T Find(int id);
 
+        T Find(string id);
+
         void Add(T item);
 
         void Update(T item); 

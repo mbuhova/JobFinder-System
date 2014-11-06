@@ -10,6 +10,21 @@
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
     <hr />
+    if (ViewBag.BulstatErrorMessage != null)
+    {
+        <div class="alert alert-dismissable alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>@ViewBag.BulstatErrorMessage.ToString()</strong>
+        </div>
+    }
+    string nameError = ViewBag.NameErrorMessage;
+    if (nameError != null)
+	{
+        <div class="alert alert-dismissable alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>@nameError</strong>
+        </div>
+	}
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.Bulstat, new { @class = "col-md-2 control-label" })
@@ -48,13 +63,21 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <label class="col-md-2 control-label">Business sectors</label>
+        <span>(Choose up to 3 sectors that apply to your company)</span>
         <div class="col-md-10">
-            @Html.ListBox("Business sectors", ((IEnumerable<JobFinder.Models.BusinessSector>)ViewBag.Sectors).Select(i => new SelectListItem()
+            @*Html.ListBox("BusinessSectors", ((IEnumerable<JobFinder.Models.BusinessSector>)ViewBag.OriginalSectors).Select(i => new SelectListItem()
        {
            Text = i.Name,
            Value = i.Id.ToString()
-       }))
+       }), htmlAttributes: new { multiple = "multiple" })*@
+            <select id="BusinessSectors" name="BusinessSectors" multiple>
+                @foreach (var item in (IEnumerable<JobFinder.Models.BusinessSector>)ViewBag.OriginalSectors)
+                {
+                    <option value=@item.Id>@item.Name</option>
+                }
+            </select>
+            <select multiple id="selectedSectors"></select>
         </div>
     </div>
     <div class="form-group">
@@ -66,6 +89,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/selectedSectors.js")"></script>
 }
 
 

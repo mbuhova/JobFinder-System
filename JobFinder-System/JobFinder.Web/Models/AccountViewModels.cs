@@ -1,6 +1,7 @@
 ﻿using JobFinder.Models;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.WebPages.Html;
 
 namespace JobFinder.Web.Models
 {
@@ -101,6 +102,7 @@ namespace JobFinder.Web.Models
         [Display(Name = "Company name")]
         public string CompanyName { get; set; }
 
+        [Required]
         [Phone]
         public string Phone { get; set; }
 
@@ -119,10 +121,8 @@ namespace JobFinder.Web.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        //[Required]
-        [Display(Name = "Business sectors")]
-        public ICollection<BusinessSector> BusinessSectors { get; set; }
+        
+        public int[] SelectedIds { get; set; }
     }
 
     public class ResetPasswordViewModel

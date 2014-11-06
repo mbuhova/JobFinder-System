@@ -34,6 +34,11 @@ namespace JobFinder.Data.Repositories
             return this.set.Find(id);
         }
 
+        public T Find(string id)
+        {
+            return this.set.Find(id);
+        }
+
         public void Add(T item)
         {
             this.ChangeState(item, EntityState.Added);

@@ -17,9 +17,13 @@ namespace JobFinder.Models
         }
 
         [Required]
+        [Index(IsUnique=true)]
+        [MaxLength(13)]
         public string Bulstat { get; set; }
 
         [Required]
+        [Index(IsUnique=true)]
+        [MaxLength(60)]
         public string CompanyName { get; set; }
 
         //[CollectionMaxLength(3)]
