@@ -1,0 +1,44 @@
+﻿@model JobFinder.Web.Areas.Company.Models.CreateOfferViewModel
+@{
+    ViewBag.Title = "Create Offer";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("CreateOffer", "JobOffer", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Create a new job offer.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(o => o.Title, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(o => o.Title, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(o => o.Description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(o => o.Description, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Town</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(o => o.TownId, ((IEnumerable<SelectListItem>)ViewBag.Towns))
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Business sector</label>
+        <div class="col-md-10">
+            @Html.DropDownListFor(o => o.BusinessSectorId, ((IEnumerable<SelectListItem>)ViewBag.BusinessSectors))
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Create" />
+        </div>
+    </div>
+}
+

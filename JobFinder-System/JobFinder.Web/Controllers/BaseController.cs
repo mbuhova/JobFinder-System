@@ -4,16 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using JobFinder.Models;
 
 namespace JobFinder.Web.Controllers
 {
     public class BaseController : Controller
     {
-       protected IJobFinderData data;
+        protected IJobFinderData data;
 
        public BaseController()
         {
-            this.data = new JobFinderData(new JobFinderDbContext());
+            this.data = new JobFinderData(new JobFinderDbContext());                      
         }
     }
 }

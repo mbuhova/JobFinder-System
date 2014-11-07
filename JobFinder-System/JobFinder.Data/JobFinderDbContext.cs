@@ -28,5 +28,9 @@ namespace JobFinder.Data
         public IDbSet<Person> People { get; set; }
 
         public IDbSet<Company> Companies { get; set; }
+
+        public IDbSet<CV> CVs { get; set; }
+
+        public IDbSet<JobOffer> JobOffers { get; set; }
     }
 }

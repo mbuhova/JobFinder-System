@@ -18,6 +18,12 @@ namespace JobFinder.Data
 
         IRepository<BusinessSector> BusinessSectors { get; }
 
+        IRepository<CV> CVs { get; }
+
+        IRepository<JobOffer> JobOffers { get; }
+
+        IRepository<Town> Towns { get; }
+
         void SaveChanges();
     }
 }
