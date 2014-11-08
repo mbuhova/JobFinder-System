@@ -9,6 +9,11 @@ namespace JobFinder.Models
 {
     public class JobOffer
     {
+        public JobOffer()
+        {
+            this.Documents = new HashSet<Document>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -20,6 +25,8 @@ namespace JobFinder.Models
 
         public int Views { get; set; }
 
+        public int ApplicationsCount { get; set; }
+
         public string CompanyId { get; set; }
         public virtual Company Company { get; set; }
 
@@ -28,5 +35,7 @@ namespace JobFinder.Models
 
         public int BusinessSectorId { get; set; }
         public virtual BusinessSector BusinessSector { get; set; }
+
+        public virtual ICollection<Document> Documents { get; set; }
     }
 }

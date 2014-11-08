@@ -21,11 +21,11 @@ namespace JobFinder.Web.Controllers
         private ApplicationUserManager _userManager;
 
 
-        public AccountController() : base()
+        public AccountController(IJobFinderData data) : base(data)
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IJobFinderData data) : base(data)
         {
             UserManager = userManager;
             SignInManager = signInManager;

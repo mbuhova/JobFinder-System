@@ -29,7 +29,7 @@ namespace JobFinder.Data
 
         public IDbSet<Company> Companies { get; set; }
 
-        public IDbSet<CV> CVs { get; set; }
+        public IDbSet<Document> Documents { get; set; }
 
         public IDbSet<JobOffer> JobOffers { get; set; }
     }

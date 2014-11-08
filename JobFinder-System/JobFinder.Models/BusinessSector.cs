@@ -9,8 +9,6 @@ namespace JobFinder.Models
 {
     public class BusinessSector
     {
-        private ICollection<Company> companies;
-
         public BusinessSector()
         {
             this.Companies = new HashSet<Company>();

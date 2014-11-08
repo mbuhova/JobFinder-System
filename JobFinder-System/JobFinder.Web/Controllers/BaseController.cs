@@ -13,9 +13,9 @@ namespace JobFinder.Web.Controllers
     {
         protected IJobFinderData data;
 
-       public BaseController()
+       public BaseController(IJobFinderData data)
         {
-            this.data = new JobFinderData(new JobFinderDbContext());                      
+            this.data = data;                     
         }
     }
 }

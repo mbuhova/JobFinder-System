@@ -41,9 +41,9 @@ namespace JobFinder.Data
             get { return this.GetRepository<BusinessSector>(); }
         }
 
-        public IRepository<CV> CVs
+        public IRepository<Document> Documents
         {
-            get { return this.GetRepository<CV>(); }
+            get { return this.GetRepository<Document>(); }
         }
 
         public IRepository<JobOffer> JobOffers

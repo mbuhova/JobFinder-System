@@ -7,17 +7,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using JobFinder.Data;
 
 namespace JobFinder.Web.Areas.Company.Controllers
 {
+    [Authorize(Roles="Company")]
     public class JobOfferController : BaseController
     {
-        private User currentUser;
+        //private User currentUser;
 
-        public JobOfferController() : base()
-        {
-            //string id = User.Identity.GetUserId();
-            //currentUser = this.data.Users.Find(id);
+        private const int OffersPerPage = 5;
+
+        public JobOfferController(IJobFinderData data) : base(data)
+        {            
         }
 
         // GET: Company/JobOffer
@@ -26,26 +28,63 @@ namespace JobFinder.Web.Areas.Company.Controllers
             return View();
         }
 
+        public ActionResult GetOffers(int? page)
+        {
+            string companyId = User.Identity.GetUserId();
+            //currentUser = this.data.Users.Find(id);
+
+            int skipPages = page == null ? 0 : (int)page - 1;
+            IEnumerable<ListOfferViewModel> model = this.data.JobOffers.All().Where(o => o.CompanyId == companyId)
+                .OrderByDescending(o => o.DateCreated).Skip(skipPages * OffersPerPage).Take(OffersPerPage).
+                Select(o => new ListOfferViewModel { Id = o.Id, Title = o.Title, DateCreated = o.DateCreated });
+            return View(model);
+        }
+
+        public ActionResult OfferDetails(int id)
+        {
+            string companyId = User.Identity.GetUserId();
+            
+            DetailsOfferViewModel model = this.data.JobOffers.All().Where(o => o.Id == id && o.CompanyId == companyId)
+                .Select(o => new DetailsOfferViewModel
+            {
+                Id = o.Id,
+                Title = o.Title,
+                Description = o.Description,
+                DateCreated = o.DateCreated,
+                Views = o.Views,
+                ApplicationsCount = o.ApplicationsCount,
+                BusinessSector = o.BusinessSector.Name,
+                Town = o.Town.Name
+            }).FirstOrDefault();
+
+            return View(model);
+        }
+
         public ActionResult CreateOffer()
         {
-            ViewBag.Towns = this.data.Towns.All().Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString() });
-            ViewBag.BusinessSectors = this.data.BusinessSectors.All().Select(b => new SelectListItem { Text = b.Name, Value = b.Id.ToString() });
+            TempData["Towns"] = this.data.Towns.All().Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString() });
+            TempData["BusinessSectors"] = this.data.BusinessSectors.All().Select(b => new SelectListItem { Text = b.Name, Value = b.Id.ToString() });
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult CreateOffer(CreateOfferViewModel model)
         {
             if (ModelState.IsValid)
             {
+                string companyId = User.Identity.GetUserId();
+
                 JobOffer offer = new JobOffer();
                 offer.Title = model.Title;
                 offer.Description = model.Description;
                 offer.DateCreated = DateTime.Now;
                 offer.TownId = model.TownId;
                 //offer.Company = (JobFinder.Models.Company)this.currentUser;
-                //offer.CompanyId = this.currentUser.Id;
+                offer.CompanyId = companyId;
+                offer.BusinessSectorId = model.BusinessSectorId;
                 this.data.JobOffers.Add(offer);
+                TempData["Success"] = "You have successfully created your job offer.";
                 return RedirectToAction("CreateOffer");
             }
 

@@ -1,0 +1,30 @@
+﻿@model JobFinder.Web.Areas.Company.Models.DetailsOfferViewModel
+
+@{
+    ViewBag.Title = "OfferDetails";
+}
+
+<h2>OfferDetails</h2>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Offer details</h3>
+    </div>
+    <div class="panel-body">
+        <span class="label label-default">Title</span><br/>
+        <p class="text-primary">@Model.Title</p>
+        <span class="label label-default">Description</span><br />
+        <p class="text-primary">@Model.Description</p>
+        <span class="label label-default">Date posted</span><br />
+        <p class="text-primary">@Model.DateCreated</p>
+        <span class="label label-default">Location</span><br />
+        <p class="text-primary">@Model.Town</p>
+        <span class="label label-default">Views</span><br />
+        <p class="text-primary">@Model.Views</p>
+        <span class="label label-default">Applications</span><br />
+        <p class="text-primary">@Model.ApplicationsCount</p>
+        <span class="label label-default">Business sector</span><br />
+        <p class="text-primary">@Model.BusinessSector</p>
+    </div>
+</div>
+

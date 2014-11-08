@@ -1,4 +1,5 @@
-﻿using JobFinder.Models;
+﻿using JobFinder.Data;
+using JobFinder.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +11,7 @@ namespace JobFinder.Web.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController() : base()
+        public HomeController(IJobFinderData data) : base(data)
         {
         }
 
@@ -38,13 +39,13 @@ namespace JobFinder.Web.Controllers
             return View();
         }
 
-        [HttpPost]
+       /* [HttpPost]
         public ActionResult File(HttpPostedFileBase file)
         {
             var allowedExtensions = new[] { ".doc", ".docx", ".txt", ".jpeg" };
             
 
-            CV cv = new CV();
+            Document cv = new Document();
 
             foreach (string upload in Request.Files)
             {
@@ -70,8 +71,8 @@ namespace JobFinder.Web.Controllers
 
         public ActionResult Download()
         {
-            CV cv = this.data.CVs.Find(2);
+            Document cv = this.data.CVs.Find(2);
             return File(cv.FileData, cv.ContentType, "aaaa");
-        }
+        }*/
     }
 }
