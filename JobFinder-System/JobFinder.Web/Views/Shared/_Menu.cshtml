@@ -1,0 +1,39 @@
+﻿@{
+    var menus = new[]
+                {
+                   new { Text="Home", ActionName="Index",ControllerName="Home",Role="Anonymous"  },
+                   new { Text="About", ActionName="About",ControllerName="Home",Role="Anonymous"  },
+                   new { Text="Contact", ActionName="Contact",ControllerName="Home",Role="Anonymous"  },
+                   new { Text="My offers", ActionName="GetOffers",ControllerName="JobOffer",Role="Company"  },
+                   new { Text="Create offer", ActionName="CreateOffer",ControllerName="JobOffer",Role="Company"  },
+                   new { Text="My CVs", ActionName="GetDocuments",ControllerName="Document",Role="Person"  },
+                   @*new { Text="Application history", ActionName="CreateOffer",ControllerName="Document",Role="Person"  },*@
+                };
+} 
+
+<ul class="nav navbar-nav">
+    @if (!Request.IsAuthenticated)
+    {
+        var links = menus.Where(m => m.Role == "Anonymous");
+        foreach (var link in links)
+        {
+            <li>@Html.ActionLink(link.Text, link.ActionName, link.ControllerName, new { Area = "" }, null)</li>
+        }
+    }
+    else if (HttpContext.Current.User.IsInRole("Company"))
+    {
+        var links = menus.Where(m => m.Role == "Company");
+        foreach (var link in links)
+        {
+            <li>@Html.ActionLink(link.Text, link.ActionName, link.ControllerName, new { Area = "Company" }, null)</li>
+        }
+    }
+    else if (HttpContext.Current.User.IsInRole("Person"))
+    {
+        var links = menus.Where(m => m.Role == "Person");
+        foreach (var link in links)
+        {
+            <li>@Html.ActionLink(link.Text, link.ActionName, link.ControllerName, new { Area = "Person" }, null)</li>
+        }
+    }
+</ul>

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using JobFinder.Data;
+using JobFinder.Web.Models;
 
 namespace JobFinder.Web.Areas.Company.Controllers
 {
@@ -36,26 +37,21 @@ namespace JobFinder.Web.Areas.Company.Controllers
             int skipPages = page == null ? 0 : (int)page - 1;
             IEnumerable<ListOfferViewModel> model = this.data.JobOffers.All().Where(o => o.CompanyId == companyId)
                 .OrderByDescending(o => o.DateCreated).Skip(skipPages * OffersPerPage).Take(OffersPerPage).
-                Select(o => new ListOfferViewModel { Id = o.Id, Title = o.Title, DateCreated = o.DateCreated });
+                Select(ListOfferViewModel.FromJobOffer);
             return View(model);
         }
 
-        public ActionResult OfferDetails(int id)
+        public ActionResult OfferDetails(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction("GetOffers");
+            }
+
             string companyId = User.Identity.GetUserId();
             
             DetailsOfferViewModel model = this.data.JobOffers.All().Where(o => o.Id == id && o.CompanyId == companyId)
-                .Select(o => new DetailsOfferViewModel
-            {
-                Id = o.Id,
-                Title = o.Title,
-                Description = o.Description,
-                DateCreated = o.DateCreated,
-                Views = o.Views,
-                ApplicationsCount = o.ApplicationsCount,
-                BusinessSector = o.BusinessSector.Name,
-                Town = o.Town.Name
-            }).FirstOrDefault();
+                .Select(DetailsOfferViewModel.FromJobOffer).FirstOrDefault();
 
             return View(model);
         }

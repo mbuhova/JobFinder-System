@@ -25,7 +25,7 @@ namespace JobFinder.Models
         public string PersonId { get; set; }
         public virtual Person Person { get; set; }
 
-        public int JobOfferId { get; set; }
+        public int? JobOfferId { get; set; }
         public virtual JobOffer JobOffer { get; set; }
     }
 }

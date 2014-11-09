@@ -1,10 +1,6 @@
 ﻿@model JobFinder.Web.Models.DetailsOfferViewModel
-
 @{
     ViewBag.Title = "OfferDetails";
 }
-
-<h2>OfferDetails</h2>
-
-@Html.Partial("~/Views/PublicOffer/_OfferInDetailsPartial.cshtml");
+@Html.Partial("_OfferInDetailsPartial", (JobFinder.Web.Models.DetailsOfferViewModel)Model)
 

@@ -90,6 +90,9 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="@Url.Content("~/Scripts/selectedSectors.js")"></script>
+    <script>
+        Controls.multipleListControl('BusinessSectors', 'SelectedIds', 'selectedSectors', 3);
+    </script>
 }
 
 

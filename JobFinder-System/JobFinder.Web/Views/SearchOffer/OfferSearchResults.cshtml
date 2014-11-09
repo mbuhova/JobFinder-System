@@ -1,0 +1,18 @@
+﻿@model IEnumerable<JobFinder.Web.Models.SearchResultOfferViewModel>
+@{
+    ViewBag.Title = "OfferSearchResults";
+}
+
+<h2>OfferSearchResults</h2>
+
+<ul>
+    @foreach (var offer in Model)
+    {
+        <li>
+            @Html.ActionLink(offer.Title, "OfferDetails", "PublicOffer", new { id = offer.Id }, new { @class = "btn btn-link" })
+            <p><em>@offer.DateCreated</em></p>
+            <p><em>@offer.Town</em></p>
+            @Html.ActionLink(offer.CompanyName, "OfferDetails", "JobOffer")
+        </li>
+    }
+</ul>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Linq.Expressions;
+using JobFinder.Models;
 
 namespace JobFinder.Web.Areas.Company.Models
 {
@@ -23,30 +25,23 @@ namespace JobFinder.Web.Areas.Company.Models
 
     public class ListOfferViewModel
     {
+        public static Expression<Func<JobOffer, ListOfferViewModel>> FromJobOffer
+        {
+            get
+            {
+                return o => new ListOfferViewModel
+                {
+                    Id = o.Id,
+                    Title = o.Title,
+                    DateCreated = o.DateCreated
+                };
+            }
+        }
+
         public int Id { get; set; }
 
         public string Title { get; set; }
 
         public DateTime DateCreated { get; set; }
-
-    }
-
-    public class DetailsOfferViewModel
-    {
-        public int Id { get; set; }
-
-        public string Title { get; set; }
-
-        public DateTime DateCreated { get; set; }
-
-        public string Description { get; set; }
-
-        public int Views { get; set; }
-
-        public int ApplicationsCount { get; set; }
-
-        public string Town { get; set; }
-
-        public string BusinessSector { get; set; }
     }
 }
