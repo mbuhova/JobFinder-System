@@ -7,6 +7,8 @@ using System.Web;
 
 namespace JobFinder.Web.Models
 {
+    // TODO  http://wp.sjkp.dk/asp-net-mvc5-easy-server-side-data-paging/
+
     public class SearchOfferViewModel
     {
         public int? Town { get; set; }
@@ -14,6 +16,8 @@ namespace JobFinder.Web.Models
         public int[] Sectors { get; set; }
 
         public string Word { get; set; }
+
+        public int? Page { get; set; }
     }
 
     public class SearchResultOfferViewModel

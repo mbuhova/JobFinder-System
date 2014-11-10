@@ -4,3 +4,5 @@
 }
 @Html.Partial("_OfferInDetailsPartial", (JobFinder.Web.Models.DetailsOfferViewModel)Model)
 
+@Html.ActionLink("Apply", "ApplyForOffer", "Apply", new { area = "Person", id = Model.Id }, new { @class = "btn btn-primary" })
+

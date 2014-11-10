@@ -507,6 +507,7 @@ namespace JobFinder.Web.Controllers
         {
             AuthenticationManager.SignOut();
             Session["MyMenu"] = null; //new
+            Session["LastSearch"] = null;
             return RedirectToAction("SearchOffers", "SearchOffer");
         }
 

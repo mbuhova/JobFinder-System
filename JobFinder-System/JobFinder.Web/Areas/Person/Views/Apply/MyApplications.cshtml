@@ -1,0 +1,16 @@
+﻿@model IEnumerable<JobFinder.Web.Areas.Person.Models.ApplicationViewModel>
+@{
+    ViewBag.Title = "GetDocuments";
+}
+
+<h2>My Applications</h2>
+
+
+@foreach (var app in Model)
+{
+    <div class="well well-sm">
+        @Html.ActionLink(app.JobOfferTitle, "OfferDetails", "PublicOffer", new { area = "", id = app.JobOfferId }, new { @class = "btn btn-link" })
+        @Html.ActionLink(app.FileName, "DownloadFile", "Apply", new { id = app.FileId }, new { @class = "btn btn-link" })
+        <p>@app.DateUploaded</p>
+    </div>
+}

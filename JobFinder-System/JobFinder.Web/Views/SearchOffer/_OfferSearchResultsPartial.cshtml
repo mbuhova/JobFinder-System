@@ -1,0 +1,44 @@
+﻿@model IEnumerable<JobFinder.Web.Models.SearchResultOfferViewModel>
+@{
+    ViewBag.Title = "OfferSearchResults";
+}
+
+<h2>OfferSearchResults</h2>
+<h3>Found offers: @TempData["OffersCount"]</h3>
+
+@if (Model != null)
+{
+    <ul>
+        @foreach (var offer in Model)
+        {
+            <li>
+                @Html.ActionLink(offer.Title, "OfferDetails", "PublicOffer", new { id = offer.Id }, new { @class = "btn btn-link" })
+                <p><em>@offer.DateCreated</em></p>
+                <p><em>@offer.Town</em></p>
+                @Html.ActionLink(offer.CompanyName, "OfferDetails", "JobOffer")
+            </li>
+        }
+    </ul>
+}
+
+
+@*{
+        int pagesToDisplay = (int)TempData["OffersCount"] / Model.Count();
+        if (pagesToDisplay < 5)
+        {
+            pagesToDisplay = (int)TempData["OffersCount"] % Model.Count() != 0 ? pagesToDisplay + 1 : pagesToDisplay;
+        }
+        else
+        {
+            pagesToDisplay = 5;
+        }
+    }
+    <ul class="pagination pagination-sm">
+        <li class="disabled"><a href="#">«</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">»</a></li>
+    </ul>*@

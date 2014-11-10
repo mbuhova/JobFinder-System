@@ -34,7 +34,7 @@ namespace JobFinder.Web.Areas.Company.Controllers
             string companyId = User.Identity.GetUserId();
             //currentUser = this.data.Users.Find(id);
 
-            int skipPages = page == null ? 0 : (int)page - 1;
+            int skipPages = (page == null || page <= 0) ? 0 : (int)page - 1;
             IEnumerable<ListOfferViewModel> model = this.data.JobOffers.All().Where(o => o.CompanyId == companyId)
                 .OrderByDescending(o => o.DateCreated).Skip(skipPages * OffersPerPage).Take(OffersPerPage).
                 Select(ListOfferViewModel.FromJobOffer);

@@ -1,18 +1,40 @@
-﻿@model IEnumerable<JobFinder.Web.Models.SearchResultOfferViewModel>
+﻿@*model IEnumerable<JobFinder.Web.Models.SearchResultOfferViewModel>*@
+@model PagedList.IPagedList<JobFinder.Web.Models.SearchResultOfferViewModel>
+
 @{
     ViewBag.Title = "OfferSearchResults";
 }
 
 <h2>OfferSearchResults</h2>
+<h3>Found offers: @TempData["OffersCount"]</h3>
 
-<ul>
-    @foreach (var offer in Model)
-    {
-        <li>
-            @Html.ActionLink(offer.Title, "OfferDetails", "PublicOffer", new { id = offer.Id }, new { @class = "btn btn-link" })
-            <p><em>@offer.DateCreated</em></p>
-            <p><em>@offer.Town</em></p>
-            @Html.ActionLink(offer.CompanyName, "OfferDetails", "JobOffer")
-        </li>
-    }
-</ul>
+@if (Model != null)
+{
+    <ul class="listOffers">
+        @foreach (var offer in Model)
+        {
+            <li>
+                <div class="row">
+                    <p class="text-muted"><em>@offer.DateCreated</em></p>
+                    <div class="col-md-3">
+                        @Html.ActionLink(offer.Title, "OfferDetails", "PublicOffer", new { id = offer.Id }, new { @class = "btn btn-link offerHeader" })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.ActionLink(offer.CompanyName, "OfferDetails", "JobOffer")                        
+                    </div>
+                </div>
+                <p class="text-muted"><em>@offer.Town</em></p>   
+                <hr/>             
+            </li>
+        }
+    </ul>
+}
+<div class="row" id="pager">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("OfferSearchResults", new { page }))
+</div>
+
+
+
+

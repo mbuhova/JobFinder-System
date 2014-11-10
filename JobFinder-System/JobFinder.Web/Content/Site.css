@@ -27,3 +27,12 @@ textarea {
     width: 200px;
     min-height: 100px;
 }
+
+.offerHeader {
+    font-size: 25px;
+    padding: 0;
+}
+
+.listOffers {
+    list-style-type: none;
+}

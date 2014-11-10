@@ -1,22 +1,66 @@
 ﻿@model JobFinder.Web.Models.DetailsOfferViewModel
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">Offer details</h3>
-    </div>
-    <div class="panel-body">
-        <span class="label label-default">Title</span><br />
-        <p class="text-primary">@Model.Title</p>
-        <span class="label label-default">Description</span><br />
-        <p class="text-primary">@Model.Description</p>
-        <span class="label label-default">Date posted</span><br />
-        <p class="text-primary">@Model.DateCreated</p>
-        <span class="label label-default">Location</span><br />
-        <p class="text-primary">@Model.Town</p>
-        <span class="label label-default">Views</span><br />
-        <p class="text-primary">@Model.Views</p>
-        <span class="label label-default">Applications</span><br />
-        <p class="text-primary">@Model.ApplicationsCount</p>
-        <span class="label label-default">Business sector</span><br />
-        <p class="text-primary">@Model.BusinessSector</p>
+<div class="jumbotron">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Offer details</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>Title:</h4>
+                </div>
+                <div class="col-md-4">
+                    <p class="text-primary">@Model.Title</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>Description:</h4>
+                </div>
+                <div class="col-md-4">
+                    <p class="text-primary">@Model.Description</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>Date posted:</h4>
+                </div>
+                <div class="col-md-4">
+                    <p class="text-primary">@Model.DateCreated</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>Location:</h4>
+                </div>
+                <div class="col-md-4">
+                    <p class="text-primary">@Model.Town</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>Views:</h4>
+                </div>
+                <div class="col-md-4">
+                    <p class="text-primary">@Model.Views</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>Applications:</h4>
+                </div>
+                <div class="col-md-4">
+                    <p class="text-primary">@Model.ApplicationsCount</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>Business sector:</h4>
+                </div>
+                <div class="col-md-4">
+                    <p class="text-primary">@Model.BusinessSector</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -9,17 +9,31 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using PagedList;
 
 namespace JobFinder.Web.Controllers
 {
     public class SearchOfferController : BaseController
     {
+        private const int OffersPerPage = 10;
+
         public SearchOfferController(IJobFinderData data) : base(data)
         {
         }
 
         public ActionResult SearchOffers()
         {
+           //IEnumerable<SearchResultOfferViewModel> offers = this.data.JobOffers.All().Select(SearchResultOfferViewModel.FromJobOffer).ToList();
+           //SearchOfferViewModel lastSearch = HttpContext.Session["LastSearch"] as SearchOfferViewModel;
+           //if (HttpContext.Session["LastSearch"] == null)
+           //{
+           //    HttpContext.Session["LastSearch"] = new SearchOfferViewModel();
+           //    lastSearch = new SearchOfferViewModel();
+           //}
+
+            //IEnumerable<SearchResultOfferViewModel> offers = GetResults(lastSearch);
+
+
             IEnumerable<SelectListItem> towns = this.data.Towns.All()
                 .Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString() })
                 .OrderBy(t => t.Text);
@@ -28,14 +42,25 @@ namespace JobFinder.Web.Controllers
                 .OrderBy(b => b.Text);
             TempData["Towns"] = towns;
             TempData["BusinessSectors"] = businessSectors;
-            return View();
+            return View(); //offers.ToPagedList(1, 2)
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult OfferSearchResults(SearchOfferViewModel model)
         {
-            IEnumerable<SearchResultOfferViewModel> offers = FilterOffers(model).AsQueryable().Include("Company").Include("Town")
-                .Select(SearchResultOfferViewModel.FromJobOffer).ToList();
-            return View(offers);
+           SearchOfferViewModel lastSearch = HttpContext.Session["LastSearch"] as SearchOfferViewModel;
+           if (model.Page == null)
+           {
+               HttpContext.Session["LastSearch"] = model;
+               lastSearch = model;
+           }
+
+            IEnumerable<SearchResultOfferViewModel> offers = GetResults(lastSearch);
+            int page = model.Page ?? 1;
+
+            return View(offers.ToPagedList(page, OffersPerPage));
+            //return this.PartialView("_OfferSearchResultsPartial", offers.ToPagedList(2, 2));
         }
 
         private IEnumerable<JobOffer> FilterOffers(SearchOfferViewModel model)
@@ -48,7 +73,9 @@ namespace JobFinder.Web.Controllers
 
             if (offers != null && model.Word != null)
             {
-                offers = offers.Where(o => o.Title.Contains(model.Word) || o.Description.Contains(model.Word));
+                string word = model.Word.ToLower();
+                offers = offers.Where(o => o.Title.ToLower().Contains(word) || o.Description.ToLower().Contains(word) 
+                    || o.BusinessSector.Name.ToLower().Contains(word) || o.Company.CompanyName.ToLower().Contains(word));
             }
 
             return offers;
@@ -81,6 +108,21 @@ namespace JobFinder.Web.Controllers
 			}
 
             return result;
+        }
+
+        private IEnumerable<SearchResultOfferViewModel> GetResults(SearchOfferViewModel lastSearch)
+        {
+            //int skipPages = (lastSearch.Page == null || lastSearch.Page <= 0) ? 0 : (int)lastSearch.Page - 1;
+            int offersCount = 0;
+
+            IEnumerable<SearchResultOfferViewModel> offers = FilterOffers(lastSearch).AsQueryable().Include("Company").Include("Town")
+                .Select(SearchResultOfferViewModel.FromJobOffer).OrderByDescending(o => o.DateCreated);
+
+            offersCount = offers.Count();
+
+            //offers = offers.Skip(skipPages * OffersPerPage).Take(OffersPerPage).ToList();
+            TempData["OffersCount"] = offersCount;
+            return offers;
         }
     }
 }
