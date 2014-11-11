@@ -33,7 +33,8 @@ namespace JobFinder.Web.Areas.Company.Models
                 {
                     Id = o.Id,
                     Title = o.Title,
-                    DateCreated = o.DateCreated
+                    DateCreated = o.DateCreated,
+                    IsActive = o.IsActive
                 };
             }
         }
@@ -43,5 +44,7 @@ namespace JobFinder.Web.Areas.Company.Models
         public string Title { get; set; }
 
         public DateTime DateCreated { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

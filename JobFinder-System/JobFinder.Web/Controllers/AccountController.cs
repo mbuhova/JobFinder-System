@@ -75,6 +75,15 @@ namespace JobFinder.Web.Controllers
                 return View(model);
             }
 
+            User current = this.data.Users.All().Where(u => u.Email == model.Email).FirstOrDefault();
+            Company company = current as Company;
+
+            if (company != null && !company.IsApproved)
+            {
+                TempData["NotApproved"] = "You are waiting for approval.";
+                return RedirectToAction("Login", "Account");
+            }
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -155,7 +164,10 @@ namespace JobFinder.Web.Controllers
         [AllowAnonymous]
         public ActionResult RegisterCompany()
         {
-            ViewBag.OriginalSectors = this.data.BusinessSectors.All();
+            ViewBag.OriginalSectors = this.data.BusinessSectors.All()
+                .Select(s => new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
+            //ViewBag.OriginalSectors = this.data.BusinessSectors.All();
+            //JobFinder.Models.BusinessSector
             return View();
         }
 
@@ -192,7 +204,7 @@ namespace JobFinder.Web.Controllers
                     {
                         AddBusinessSectors(model.SelectedIds, user.Id);
 
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                         // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
@@ -200,14 +212,18 @@ namespace JobFinder.Web.Controllers
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                        return RedirectToAction("SearchOffers", "SearchOffer");
+                        TempData["WaitingApproval"] = "Your registration was successfull. You are waiting for approval. Your profile will be active in 24 hours.";
+                        return RedirectToAction("RegisterCompany", "Account");
                     }
                     AddErrors(result);
                 }              
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.OriginalSectors = this.data.BusinessSectors.All();
+            //ViewBag.OriginalSectors = this.data.BusinessSectors.All();
+
+            ViewBag.OriginalSectors = this.data.BusinessSectors.All()
+                .Select(s => new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
             return View(model);
         }
 
@@ -267,9 +283,12 @@ namespace JobFinder.Web.Controllers
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                UserManager.AddToRole(user.Id, "Person");
+                
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -277,7 +296,8 @@ namespace JobFinder.Web.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("SearchOffers", "SearchOffer");
+                    TempData["Success"] = "Successfull registration. Please log in to view your profile.";
+                    return RedirectToAction("Register", "Account");
                 }
                 AddErrors(result);
             }

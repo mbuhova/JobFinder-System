@@ -3,43 +3,52 @@
     ViewBag.Title = "ApplyForOffer";
 }
 
-<h2>ApplyForOffer</h2>
+<h4>ApplyForOffer</h4>
 
 @using (Html.BeginForm("ApplyForOffer", "Apply", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Upload your CV.</h4>
-    if (TempData["Success"] != null)
-    {
-        <div class="alert alert-dismissable alert-success">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            @TempData["Success"]
-        </div>
-    }
-    if (TempData["NotAllowedFile"] != null)
+    if (TempData["AlreadyApplied"] != null)
     {
         <div class="alert alert-dismissable alert-danger">
             <button type="button" class="close" data-dismiss="alert">×</button>
-            @TempData["NotAllowedFile"]
+            @TempData["AlreadyApplied"]
         </div>
     }
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        <div class="col-md-10">
-            <label>Upload your CV </label>
-            <em>Allowed files (.doc, .docx, .pdf)</em>
-            <em>Max size 4 MB</em>
+    else
+    {
+        if (TempData["Success"] != null)
+        {
+            <div class="alert alert-dismissable alert-success">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                @TempData["Success"]
+            </div>
+        }
+        if (TempData["NotAllowedFile"] != null)
+        {
+            <div class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                @TempData["NotAllowedFile"]
+            </div>
+        }
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                <label>Upload your CV </label>
+                <em>Allowed files (.doc, .docx, .pdf)</em>
+                <em>Max size 4 MB</em>
+            </div>
+            <div class="col-md-10">
+                <input type="file" name="file" class="form-control" />
+            </div>
         </div>
-        <div class="col-md-10">
-            <input type="file" name="file" class="form-control" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" name="Submit" id="Submit" class="btn btn-default" value="Upload" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" name="Submit" id="Submit" class="btn btn-default" value="Upload" />
-        </div>
-    </div>
+    }
 }
 
 @section Scripts {

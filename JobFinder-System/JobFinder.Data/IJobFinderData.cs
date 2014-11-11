@@ -18,7 +18,7 @@ namespace JobFinder.Data
 
         IRepository<BusinessSector> BusinessSectors { get; }
 
-        IRepository<Document> Documents { get; }
+        IRepository<Application> Applications { get; }
 
         IRepository<JobOffer> JobOffers { get; }
 

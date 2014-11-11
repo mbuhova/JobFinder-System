@@ -5,6 +5,14 @@
 
 <h2>@ViewBag.Title.</h2>
 
+@if (TempData["WaitingApproval"] != null)
+{
+    <div class="alert alert-dismissable alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>@TempData["WaitingApproval"]</strong>
+    </div>
+}
+
 @using (Html.BeginForm("RegisterCompany", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
@@ -72,9 +80,9 @@
            Value = i.Id.ToString()
        }), htmlAttributes: new { multiple = "multiple" })*@
             <select id="BusinessSectors" name="BusinessSectors" multiple>
-                @foreach (var item in (IEnumerable<JobFinder.Models.BusinessSector>)ViewBag.OriginalSectors)
+                @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.OriginalSectors) 
                 {
-                    <option value=@item.Id>@item.Name</option>
+                    <option value=@item.Value>@item.Text</option>
                 }
             </select>
             <select multiple id="selectedSectors"></select>
@@ -89,7 +97,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="@Url.Content("~/Scripts/selectedSectors.js")"></script>
+    <script src="@Url.Content("~/Scripts/controls.js")"></script>
     <script>
         Controls.multipleListControl('BusinessSectors', 'SelectedIds', 'selectedSectors', 3);
     </script>

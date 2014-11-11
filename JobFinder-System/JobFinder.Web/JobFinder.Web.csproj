@@ -181,9 +181,8 @@
     <Compile Include="Areas\Company\Controllers\JobOfferController.cs" />
     <Compile Include="Areas\Company\Models\JobOfferViewModels.cs" />
     <Compile Include="Areas\Person\Controllers\ApplyController.cs" />
-    <Compile Include="Areas\Person\Controllers\DocumentController.cs" />
+    <Compile Include="Areas\Person\Controllers\FollowedOffersController.cs" />
     <Compile Include="Areas\Person\Models\ApplicationViewModels.cs" />
-    <Compile Include="Areas\Person\Models\DocumentViewModels.cs" />
     <Compile Include="Areas\Person\PersonAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -218,8 +217,6 @@
     <Content Include="Areas\Person\Views\web.config" />
     <Content Include="Areas\Person\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Person\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Person\Views\Document\GetDocuments.cshtml" />
-    <Content Include="Areas\Person\Views\Document\UploadFile.cshtml" />
     <Content Include="Areas\Person\Views\Apply\ApplyForOffer.cshtml" />
     <Content Include="Areas\Person\Views\Apply\MyApplications.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -235,7 +232,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\selectedSectors.js" />
+    <Content Include="Scripts\controls.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -275,14 +272,15 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\RegisterCompany.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
-    <Content Include="Views\PublicOffer\_OfferInDetailsPartial.cshtml" />
+    <Content Include="Views\Shared\_OfferInDetailsPartial.cshtml" />
     <Content Include="Views\PublicOffer\OfferDetails.cshtml" />
     <Content Include="Views\SearchOffer\_OfferSearchResultsPartial.cshtml" />
     <Content Include="Views\SearchOffer\OfferSearchResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Base\" />
+    <Folder Include="Areas\Person\Views\FollowedOffers\" />
+    <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

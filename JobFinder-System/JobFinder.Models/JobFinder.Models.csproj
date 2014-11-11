@@ -53,9 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessSector.cs" />
-    <Compile Include="CollectionMinLengthAttribute.cs" />
     <Compile Include="Company.cs" />
-    <Compile Include="Document.cs" />
+    <Compile Include="Application.cs" />
     <Compile Include="JobOffer.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

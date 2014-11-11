@@ -9,7 +9,7 @@ namespace JobFinder.Web.Areas.Person.Models
 {
     public class ApplicationViewModel
     {
-        public static Expression<Func<Document, ApplicationViewModel>> FromApplication
+        public static Expression<Func<Application, ApplicationViewModel>> FromApplication
         {
             get
             {

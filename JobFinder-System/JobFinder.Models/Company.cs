@@ -26,11 +26,12 @@ namespace JobFinder.Models
         [MaxLength(60)]
         public string CompanyName { get; set; }
 
-        //[CollectionMaxLength(3)]
         public virtual ICollection<BusinessSector> BusinessSectors { get; set; }
 
         public string Address { get; set; }
 
         public string WebSite { get; set; }
+
+        public bool IsApproved { get; set; }
     }
 }

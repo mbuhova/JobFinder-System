@@ -5,6 +5,13 @@
 }
 
 <h2>@ViewBag.Title.</h2>
+@if (TempData["NotApproved"] != null)
+{
+    <div class="alert alert-dismissable alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>@TempData["NotApproved"]</strong>
+    </div>
+}
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
@@ -49,11 +56,6 @@
                         @Html.ActionLink("Forgot your password?", "ForgotPassword")
                     </p>*@
             }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </section>
     </div>
 </div>

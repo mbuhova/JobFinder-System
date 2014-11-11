@@ -85,18 +85,18 @@ namespace JobFinder.Web.Controllers
         {
             if (sectorsIds == null || sectorsIds.Length == 0)
             {
-                return this.data.JobOffers.All();
+                return this.data.JobOffers.All().Where(o => o.IsActive);
             }
 
             int id = sectorsIds[0];
-            IQueryable<JobOffer> result = this.data.JobOffers.All().Where(o => o.BusinessSectorId == id);
+            IQueryable<JobOffer> result = this.data.JobOffers.All().Where(o => o.BusinessSectorId == id && o.IsActive);
 
             IQueryable<JobOffer> singleSector = null;
 
             for (int i = 1; i < sectorsIds.Length; i++)
 			{
                 id = sectorsIds[i];
-                singleSector = this.data.JobOffers.All().Where(o => o.BusinessSectorId == id);
+                singleSector = this.data.JobOffers.All().Where(o => o.BusinessSectorId == id && o.IsActive);
                 if (result != null)
                 {
                     result.Concat(singleSector);

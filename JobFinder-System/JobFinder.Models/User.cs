@@ -22,9 +22,5 @@ namespace JobFinder.Models
             //this.BusinessSectors = new HashSet<BusinessSector>();
             return userIdentity;
         }
-
-        //public virtual Person Person { get; set; }
-
-       // public virtual Company Company { get; set; }
     }
 }

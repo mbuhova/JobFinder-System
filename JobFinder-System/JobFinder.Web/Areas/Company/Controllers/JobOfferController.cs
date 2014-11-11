@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using JobFinder.Data;
 using JobFinder.Web.Models;
+using PagedList;
 
 namespace JobFinder.Web.Areas.Company.Controllers
 {
@@ -17,7 +18,7 @@ namespace JobFinder.Web.Areas.Company.Controllers
     {
         //private User currentUser;
 
-        private const int OffersPerPage = 5;
+        private const int OffersPerPage = 1;
 
         public JobOfferController(IJobFinderData data) : base(data)
         {            
@@ -29,15 +30,26 @@ namespace JobFinder.Web.Areas.Company.Controllers
             return View();
         }
 
-        public ActionResult GetOffers(int? page)
+        public ActionResult GetOffers(int? page, bool? onlyActive)
         {
             string companyId = User.Identity.GetUserId();
-            //currentUser = this.data.Users.Find(id);
 
-            int skipPages = (page == null || page <= 0) ? 0 : (int)page - 1;
+            int pageNumber = page ?? 1;
+
             IEnumerable<ListOfferViewModel> model = this.data.JobOffers.All().Where(o => o.CompanyId == companyId)
-                .OrderByDescending(o => o.DateCreated).Skip(skipPages * OffersPerPage).Take(OffersPerPage).
-                Select(ListOfferViewModel.FromJobOffer);
+                .OrderByDescending(o => o.DateCreated).Select(ListOfferViewModel.FromJobOffer);//.ToPagedList(pageNumber, OffersPerPage);
+
+            if (onlyActive != null)
+            {
+                model = model.Where(m => m.IsActive == onlyActive);
+                TempData["onlyActive"] = onlyActive;
+            }
+
+            model = model.ToPagedList(pageNumber, OffersPerPage);
+            //int skipPages = (page == null || page <= 0) ? 0 : (int)page - 1;
+            //IEnumerable<ListOfferViewModel> model = this.data.JobOffers.All().Where(o => o.CompanyId == companyId)
+            //    .OrderByDescending(o => o.DateCreated).Skip(skipPages * OffersPerPage).Take(OffersPerPage).
+            //    Select(ListOfferViewModel.FromJobOffer);
             return View(model);
         }
 
@@ -52,7 +64,7 @@ namespace JobFinder.Web.Areas.Company.Controllers
             
             DetailsOfferViewModel model = this.data.JobOffers.All().Where(o => o.Id == id && o.CompanyId == companyId)
                 .Select(DetailsOfferViewModel.FromJobOffer).FirstOrDefault();
-
+            //return View("~/Views/PublicOffer/OfferDetails.cshtml", model);
             return View(model);
         }
 
@@ -76,7 +88,7 @@ namespace JobFinder.Web.Areas.Company.Controllers
                 offer.Description = model.Description;
                 offer.DateCreated = DateTime.Now;
                 offer.TownId = model.TownId;
-                //offer.Company = (JobFinder.Models.Company)this.currentUser;
+                offer.IsActive = true;
                 offer.CompanyId = companyId;
                 offer.BusinessSectorId = model.BusinessSectorId;
                 this.data.JobOffers.Add(offer);

@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JobFinder.Models
 {
-    public class Document
+    public class Application
     {
         [Key]
         public int Id { get; set; }

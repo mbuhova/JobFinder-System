@@ -5,6 +5,14 @@
 
 <h2>@ViewBag.Title.</h2>
 
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-dismissable alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>@TempData["Success"]</strong>
+    </div>
+}
+
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()

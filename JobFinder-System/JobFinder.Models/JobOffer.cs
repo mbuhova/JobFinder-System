@@ -11,7 +11,8 @@ namespace JobFinder.Models
     {
         public JobOffer()
         {
-            this.Documents = new HashSet<Document>();
+            this.Applications = new HashSet<Application>();
+            this.PeopleFollowing = new HashSet<Person>();
         }
 
         [Key]
@@ -22,6 +23,8 @@ namespace JobFinder.Models
         public string Description { get; set; }
 
         public DateTime DateCreated { get; set; }
+
+        public bool IsActive { get; set; }
 
         public int Views { get; set; }
 
@@ -36,6 +39,8 @@ namespace JobFinder.Models
         public int BusinessSectorId { get; set; }
         public virtual BusinessSector BusinessSector { get; set; }
 
-        public virtual ICollection<Document> Documents { get; set; }
+        public virtual ICollection<Application> Applications { get; set; }
+
+        public virtual ICollection<Person> PeopleFollowing { get; set; }
     }
 }

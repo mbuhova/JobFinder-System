@@ -6,5 +6,25 @@
 
 <h2>OfferDetails</h2>
 
-@Html.Partial("~/Views/PublicOffer/_OfferInDetailsPartial.cshtml");
+@Html.Partial("~/Views/Shared/_OfferInDetailsPartial.cshtml");
+
+<div class="row">
+    <div class="col-lg-3">
+        @Ajax.ActionLink("Mark as expired", "TODO", "JobOffer", new { area = "Company" },
+                  new AjaxOptions
+                  {
+                      UpdateTargetId = "expired",
+                      InsertionMode = InsertionMode.Replace,
+                      HttpMethod = "GET"
+                  }, new { @class = "btn btn-danger" })
+        <br />
+        <br />
+        <strong>You can't undo this action.</strong>
+        <br />
+        <span><em>If you mark your offer as expired no one will be able to see it and apply for it.</em></span>
+    </div>
+    <div class="col-lg-offset-6">
+        @Html.ActionLink("View applications", "TODO", "TODO", new { area = "Company" }, new { @class = "btn btn-primary" })
+    </div>
+</div>
 
