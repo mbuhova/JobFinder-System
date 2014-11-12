@@ -32,6 +32,8 @@ namespace JobFinder.Models
 
         public string WebSite { get; set; }
 
+        public string AboutUs { get; set; }
+
         public bool IsApproved { get; set; }
     }
 }

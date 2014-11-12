@@ -1,18 +1,54 @@
 ﻿@{
     var menus = new[]
                 {
-                   new { Text="Home", ActionName="Index",ControllerName="Home",Role="Anonymous"  },
-                   new { Text="About", ActionName="About",ControllerName="Home",Role="Anonymous"  },
-                   new { Text="Contact", ActionName="Contact",ControllerName="Home",Role="Anonymous"  },
-                   new { Text="My offers", ActionName="GetOffers",ControllerName="JobOffer",Role="Company"  },
-                   new { Text="Create offer", ActionName="CreateOffer",ControllerName="JobOffer",Role="Company"  },
-                   new { Text="My applications", ActionName="MyApplications",ControllerName="Apply",Role="Person"  },
-                   new { Text="Followed offers", ActionName="Index",ControllerName="FollowedOffers",Role="Person"  },
+                   new { Text="Home", ActionName="Index",ControllerName="Home",Role="Anonymous" },
+                   new { Text="About", ActionName="About",ControllerName="Home",Role="Anonymous" },
+                   new { Text="Contact", ActionName="Contact",ControllerName="Home",Role="Anonymous" },
+                   new { Text="My offers", ActionName="GetOffers",ControllerName="JobOffer",Role="Company" },
+                   new { Text="Create offer", ActionName="CreateOffer",ControllerName="JobOffer",Role="Company" },
+                   new { Text="My applications", ActionName="MyApplications",ControllerName="Apply",Role="Person" },
+                   new { Text="Followed offers", ActionName="Index",ControllerName="FollowedOffers",Role="Person" },
+                   new { Text="Business card", ActionName="GetBusinessCard",ControllerName="BusinessCard",Role="Company" },
                 };
 } 
 
 <ul class="nav navbar-nav">
-    @if (!Request.IsAuthenticated)
+    @{
+        string role = String.Empty;
+        string area = String.Empty;
+
+        if (!Request.IsAuthenticated)
+        {
+            role = "Anonymous";
+        }
+        else if (HttpContext.Current.User.IsInRole("Company"))
+        {
+            role = "Company";
+            area = "Company";
+        }
+        else if (HttpContext.Current.User.IsInRole("Person"))
+        {
+            role = "Person";
+            area = "Person";
+        }
+        else if (HttpContext.Current.User.IsInRole("Admin"))
+        {
+            role = "Admin";
+            area = "Admin";
+        }
+
+        var links = menus.Where(m => m.Role == role);
+        foreach (var link in links)
+        {
+            <li>@Html.ActionLink(link.Text, link.ActionName, link.ControllerName, new { Area = area }, null)</li>
+        }
+    }
+</ul>
+
+
+
+
+    @*if (!Request.IsAuthenticated)
     {
         var links = menus.Where(m => m.Role == "Anonymous");
         foreach (var link in links)
@@ -36,4 +72,4 @@
             <li>@Html.ActionLink(link.Text, link.ActionName, link.ControllerName, new { Area = "Person" }, null)</li>
         }
     }
-</ul>
+</ul>*@

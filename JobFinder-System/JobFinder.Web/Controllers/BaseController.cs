@@ -13,7 +13,7 @@ namespace JobFinder.Web.Controllers
     {
         protected IJobFinderData data;
 
-       public BaseController(IJobFinderData data)
+        public BaseController(IJobFinderData data)
         {
             this.data = data;                     
         }

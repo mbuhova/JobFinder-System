@@ -178,7 +178,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Company\CompanyAreaRegistration.cs" />
+    <Compile Include="Areas\Company\Controllers\BusinessCardController.cs" />
     <Compile Include="Areas\Company\Controllers\JobOfferController.cs" />
+    <Compile Include="Areas\Company\Models\BussinessCardViewModels.cs" />
     <Compile Include="Areas\Company\Models\JobOfferViewModels.cs" />
     <Compile Include="Areas\Person\Controllers\ApplyController.cs" />
     <Compile Include="Areas\Person\Controllers\FollowedOffersController.cs" />
@@ -219,6 +221,8 @@
     <Content Include="Areas\Person\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Person\Views\Apply\ApplyForOffer.cshtml" />
     <Content Include="Areas\Person\Views\Apply\MyApplications.cshtml" />
+    <Content Include="Views\Shared\BussinessCard.cshtml" />
+    <Content Include="Areas\Company\Views\BusinessCard\_EditCardPartial.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

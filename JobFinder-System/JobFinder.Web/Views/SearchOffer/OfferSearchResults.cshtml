@@ -20,7 +20,7 @@
                         @Html.ActionLink(offer.Title, "OfferDetails", "PublicOffer", new { id = offer.Id }, new { @class = "btn btn-link offerHeader" })
                     </div>
                     <div class="col-md-3">
-                        @Html.ActionLink(offer.CompanyName, "OfferDetails", "JobOffer")                        
+                        @Html.ActionLink(offer.CompanyName, "GetCompanyBusinessCard", "PublicOffer", new { id = offer.CompanyId }, null)                      
                     </div>
                 </div>
                 <p class="text-muted"><em>@offer.Town</em></p>   

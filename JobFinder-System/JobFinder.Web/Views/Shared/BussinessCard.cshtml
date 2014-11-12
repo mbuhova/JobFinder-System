@@ -1,0 +1,74 @@
+﻿@model JobFinder.Web.Areas.Company.Models.BussinessCardViewModel
+@{
+    ViewBag.Title = "Bussiness card";
+}
+
+<div class="jumbotron">
+    @if (TempData["InvalidModel"] != null)
+    {
+        <div class="alert alert-dismissable alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>@TempData["InvalidModel"]</strong>
+        </div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-dismissable alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>@TempData["Success"]</strong>
+        </div>
+    }
+    <div class="row">
+        <div class="panel panel-primary col-lg-6">
+            <div class="panel-heading">
+                <h3 class="panel-title">Bussiness Card</h3>
+            </div>
+            <div class="panel-body">
+                <h4><span class="text-default">Company name: </span><span class="text-muted"> @Model.CompanyName</span></h4>
+                @if (Model.AboutUs != String.Empty)
+                {
+                    <h5><span class="text-default">About us: </span><span class="text-muted"> @Model.AboutUs</span></h5>
+                }
+                @if (Model.Address != String.Empty)
+                {
+                    <h5><span class="text-default">Address: </span><span class="text-muted"> @Model.Address</span></h5>
+                }    
+                @if (Model.WebSite != String.Empty)
+                {
+                    <h5><span class="text-default">Website: </span><span class="text-muted"> @Model.WebSite</span></h5>
+                }
+                <h5>
+                    <span class="text-default">Bussiness sectors: </span><span class="text-muted"> @String.Join(", ", @Model.BusinessSectors)</span>
+
+                    @*<select id="currentSectors" multiple="">
+                        @foreach (var item in Model.BusinessSectors)
+                        {
+                            <option value=@item.Value>@item.Text</option>
+                        }
+                    </select>*@
+                </h5>
+            </div>
+        </div>
+    </div>
+    @if (HttpContext.Current.User.IsInRole("Company"))
+    { 
+        @Ajax.ActionLink("Edit", "EditCard", "BusinessCard", new { area = "Company", id = @Model.Id },
+                      new AjaxOptions
+                      {
+                          HttpMethod = "GET",
+                          UpdateTargetId = "editForm",
+                          InsertionMode = InsertionMode.Replace,
+                      }, new { @class = "btn btn-primary" })
+        
+        <hr/>
+        <div id="editForm"></div>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/controls.js")"></script>
+    <script>
+        Controls.multipleListControl('BusinessSectors', 'BusinessSectors', 'selectedSectors', 3);
+    </script>
+}

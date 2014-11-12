@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
+using JobFinder.Web.Areas.Company.Models;
 
 namespace JobFinder.Web.Controllers
 {
@@ -34,18 +35,6 @@ namespace JobFinder.Web.Controllers
 
             if (Request.IsAuthenticated && User.IsInRole("Person"))
             {
-               //Application app = this.data.Applications.All().Where(a => a.JobOfferId == model.Id)
-               //   .Include("JobOffer").Include("Person").FirstOrDefault();
-               //
-               //if (app.JobOffer.PeopleFollowing.Contains(app.Person))
-               //{
-               //    TempData["FollowButtonText"] = "Unfollow";
-               //}
-               //else
-               //{
-               //    TempData["FollowButtonText"] = "Follow";
-               //}
-
                 string personId = this.User.Identity.GetUserId();
 
                 Application app = this.data.Applications.All().Where(a => a.PersonId == personId && a.JobOfferId == model.Id)
@@ -65,6 +54,14 @@ namespace JobFinder.Web.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult GetCompanyBusinessCard(string id)
+        {
+            BussinessCardViewModel model = this.data.Companies.All().Where(c => c.Id == id)
+                .Select(BussinessCardViewModel.FromCompany).FirstOrDefault();
+
+            return View("BussinessCard", model);
         }
     }
 }

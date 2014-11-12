@@ -1,0 +1,52 @@
+﻿@model string
+@*Ajax.BeginForm("EditCard", "BusinessCard", new { id = Model },
+    new AjaxOptions { HttpMethod = "POST" }, new { @class = "form-horizontal" })*@
+@using (Html.BeginForm("EditCard", "BusinessCard", new { id = Model }, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="form-group">
+        <p class="col-lg-2 control-label text-muted"><small>Company name</small></p>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" name="CompanyName" placeholder="Company name" >
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="col-lg-2 control-label text-muted"><small>About us</small></p>
+        <div class="col-lg-10">
+            <textarea class="form-control" name="AboutUs" placeholder="About us"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="col-lg-2 control-label text-muted"><small>Address</small></p>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" name="Address" placeholder="Address">            
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="col-lg-2 control-label text-muted"><small>Website</small></p>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" name="WebSite" placeholder="Website">
+        </div>
+    </div>
+    <div class="form-group">
+        <p class="col-md-2 control-label text-muted"><small>Business sectors</small></p>
+        <span class="text-muted"><small><em>(Choose up to 3 sectors that apply to your company)</em></small></span>
+        <div class="col-md-10">
+            <select id="BusinessSectors" multiple>
+                @foreach (var item in (IEnumerable<SelectListItem>)TempData["Sectors"])
+                {
+                   <option value=@item.Value>@item.Text</option>
+                }
+            </select>
+            <select multiple id="selectedSectors"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+            <button class="btn btn-default">Cancel</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+    <script>
+        Controls.multipleListControl('BusinessSectors', 'BusinessSectors', 'selectedSectors', 3);
+    </script>
+}
