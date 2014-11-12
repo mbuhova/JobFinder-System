@@ -181,3 +181,7 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+# Third-party libraries (Kendo)
+[Ll]ibraries/
+[Kk]endo/
