@@ -20,7 +20,7 @@ namespace JobFinder.Web.Areas.Company.Models
                     CompanyName = c.CompanyName,
                     Address = c.Address,
                     WebSite = c.WebSite,
-                    BusinessSectors = c.BusinessSectors.Select(b => b.Name),
+                    BusinessSectors = c.BusinessSectors.Select(b => new SelectListItem { Text = b.Name, Value = b.Id.ToString() }),
                     AboutUs = c.AboutUs
                 };
             }
@@ -30,7 +30,7 @@ namespace JobFinder.Web.Areas.Company.Models
 
         public string CompanyName { get; set; }
 
-        public IEnumerable<string> BusinessSectors { get; set; }
+        public IEnumerable<SelectListItem> BusinessSectors { get; set; }
 
         public string Address { get; set; }
 

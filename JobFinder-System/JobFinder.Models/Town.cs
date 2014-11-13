@@ -21,5 +21,7 @@ namespace JobFinder.Models
         public string Name { get; set; }
 
         public virtual ICollection<JobOffer> JobOffers { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

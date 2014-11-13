@@ -34,10 +34,10 @@ namespace JobFinder.Web.Controllers
             //IEnumerable<SearchResultOfferViewModel> offers = GetResults(lastSearch);
 
 
-            IEnumerable<SelectListItem> towns = this.data.Towns.All()
+            IEnumerable<SelectListItem> towns = this.data.Towns.All().Where(t => !t.IsDeleted)
                 .Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString() })
                 .OrderBy(t => t.Text);
-            IEnumerable<SelectListItem> businessSectors = this.data.BusinessSectors.All()
+            IEnumerable<SelectListItem> businessSectors = this.data.BusinessSectors.All().Where(s => !s.IsDeleted)
                 .Select(b => new SelectListItem { Text = b.Name, Value = b.Id.ToString() })
                 .OrderBy(b => b.Text);
             TempData["Towns"] = towns;

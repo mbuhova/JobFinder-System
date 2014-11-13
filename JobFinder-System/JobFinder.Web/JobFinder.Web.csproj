@@ -181,7 +181,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\BusinessSectorController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OfferController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TownController.cs" />
+    <Compile Include="Areas\Admin\Models\BusinessSectorViewModels.cs" />
+    <Compile Include="Areas\Admin\Models\TownViewModels.cs" />
     <Compile Include="Areas\Company\CompanyAreaRegistration.cs" />
     <Compile Include="Areas\Company\Controllers\BusinessCardController.cs" />
     <Compile Include="Areas\Company\Controllers\JobOfferController.cs" />
@@ -454,6 +459,9 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Town\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BusinessSector\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Offer\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -517,7 +525,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Person\Views\FollowedOffers\" />
     <Folder Include="Files\" />
   </ItemGroup>

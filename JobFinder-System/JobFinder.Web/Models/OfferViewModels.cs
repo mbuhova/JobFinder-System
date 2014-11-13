@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
+using System.Web.Mvc;
 
 namespace JobFinder.Web.Models
 {
@@ -85,6 +86,38 @@ namespace JobFinder.Web.Models
         public string Town { get; set; }
 
         public string BusinessSector { get; set; }
+
+        public bool IsActive { get; set; }
+    }
+
+    public class AdminOfferViewModel
+    {
+        public static Expression<Func<JobOffer, AdminOfferViewModel>> FromJobOffer
+        {
+            get
+            {
+                return o => new AdminOfferViewModel
+                {
+                    Id = o.Id,
+                    Title = o.Title,
+                    DateCreated = o.DateCreated,
+                    Description = o.Description,
+                    CompanyName = o.Company.CompanyName,
+                    IsActive = o.IsActive
+                };
+            }
+        }
+
+        [HiddenInput(DisplayValue = false)]
+        public int Id { get; set; }
+
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public DateTime DateCreated { get; set; }
+
+        public string CompanyName { get; set; }
 
         public bool IsActive { get; set; }
     }

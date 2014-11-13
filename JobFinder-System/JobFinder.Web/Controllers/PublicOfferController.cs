@@ -61,6 +61,9 @@ namespace JobFinder.Web.Controllers
             BussinessCardViewModel model = this.data.Companies.All().Where(c => c.Id == id)
                 .Select(BussinessCardViewModel.FromCompany).FirstOrDefault();
 
+            TempData["Sectors"] = this.data.BusinessSectors.All()
+                .Select(s => new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
+
             return View("BussinessCard", model);
         }
     }

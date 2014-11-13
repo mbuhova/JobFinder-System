@@ -32,16 +32,16 @@ namespace JobFinder.Web.Areas.Company.Controllers
             return RedirectToAction("GetCompanyBusinessCard", "PublicOffer", new { area = "", id = companyId });
         }
 
-        public ActionResult EditCard(string id)
-        {
-            TempData["Sectors"] = this.data.BusinessSectors.All()
-                .Select(s => new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
-            return PartialView("_EditCardPartial", id);
-        }
-
         [HttpPost]
         public ActionResult EditCard(EditBussinessCardViewModel model)
         {
+            string currentCompanyId = User.Identity.GetUserId();
+
+            if (model != null && model.Id != currentCompanyId)
+            {
+                return RedirectToAction("GetBusinessCard", "BusinessCard");
+            }
+
             if (!ModelState.IsValid)
             {
                 TempData["InvalidModel"] = "Company name is required. Please try again.";

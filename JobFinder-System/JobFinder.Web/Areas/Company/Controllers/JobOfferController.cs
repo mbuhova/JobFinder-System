@@ -70,8 +70,8 @@ namespace JobFinder.Web.Areas.Company.Controllers
 
         public ActionResult CreateOffer()
         {
-            TempData["Towns"] = this.data.Towns.All().Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString() });
-            TempData["BusinessSectors"] = this.data.BusinessSectors.All().Select(b => new SelectListItem { Text = b.Name, Value = b.Id.ToString() });
+            TempData["Towns"] = this.data.Towns.All().Where(t => !t.IsDeleted).Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString() });
+            TempData["BusinessSectors"] = this.data.BusinessSectors.All().Where(s => !s.IsDeleted).Select(b => new SelectListItem { Text = b.Name, Value = b.Id.ToString() });
             return View();
         }
 
