@@ -2,14 +2,18 @@
 @model PagedList.IPagedList<JobFinder.Web.Models.SearchResultOfferViewModel>
 @{
     ViewBag.Title = "Home Page";
+    int? town = null;
+    if (TempData["Town"] != null)
+    {
+        town = (int)TempData["Town"];       
+    }
 }
-
-@*Ajax.BeginForm("OfferSearchResults", "SearchOffer", new AjaxOptions {  HttpMethod = "POST", UpdateTargetId = "results", InsertionMode = InsertionMode.Replace }, new { @class = "form-horizontal", role = "form" }))*@
+@**@
+@*Ajax.BeginForm("OfferSearchResults", "SearchOffer", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "results", InsertionMode = InsertionMode.Replace }, new { @class = "form-horizontal", role = "form" })*@
 <div class="jumbotron">
     <div class="row">
-        @using (Html.BeginForm("OfferSearchResults", "SearchOffer", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        @using (Html.BeginForm("OfferSearchResults", "SearchOffer", FormMethod.Get, new { @class = "form-horizontal", role = "form" }))
         {
-            @Html.AntiForgeryToken();
             <fieldset>
                 <legend>Search for job offers</legend>
                 <div class="form-group">
@@ -35,7 +39,14 @@
                         <label>Select city</label>
                     </div>
                     <div class="col-lg-3">
-                        @Html.DropDownList("Town", (IEnumerable<SelectListItem>)TempData["Towns"], string.Empty)
+                        @if (TempData["Town"] != null)
+                        {
+                            @Html.DropDownList("Town", (IEnumerable<SelectListItem>)TempData["Towns"], new { selected = TempData["Town"] })
+                        }
+                        else
+                        {
+                            @Html.DropDownList("Town", (IEnumerable<SelectListItem>)TempData["Towns"], String.Empty)
+                        }
                     </div>
                 </div>
                 <hr />
@@ -55,38 +66,7 @@
             </fieldset>
         }
     </div>
-    @*<div class="row" id="results">
-        @Html.Partial("_OfferSearchResultsPartial", Model)
-    </div>
-    <div class="row" id="pager">
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-        @Html.PagedListPager(Model, page => Url.Action("OfferSearchResults", new { page }))
-    </div>*@
 </div>
-
-@*section Pager {
-    @{
-        int pagesToDisplay = (int)TempData["OffersCount"] / Model.Count();
-        if (pagesToDisplay < 5)
-        {
-            pagesToDisplay = (int)TempData["OffersCount"] % Model.Count() != 0 ? pagesToDisplay + 1 : pagesToDisplay;
-        }
-        else
-        {
-            pagesToDisplay = 5;
-        }
-    }
-    <ul class="pagination pagination-sm">
-        <li class="disabled"><a href="#">«</a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">»</a></li>
-    </ul>
-}*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

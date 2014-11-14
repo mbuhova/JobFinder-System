@@ -1,6 +1,6 @@
 ﻿@using JobFinder.Web.Models
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Offers";
 }
 @(Html.Kendo().Grid<AdminOfferViewModel>().Name("offers").Columns(columns =>
 {
@@ -14,6 +14,7 @@
 })
     .Pageable(page => page.Refresh(true))
     .Sortable()
+    .Filterable()
         .Editable(edit =>
         {
             edit.Mode(GridEditMode.PopUp);

@@ -111,12 +111,16 @@ namespace JobFinder.Web.Models
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         public string Title { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         public string Description { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         public DateTime DateCreated { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         public string CompanyName { get; set; }
 
         public bool IsActive { get; set; }

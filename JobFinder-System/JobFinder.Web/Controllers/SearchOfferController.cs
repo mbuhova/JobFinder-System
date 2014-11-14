@@ -15,7 +15,7 @@ namespace JobFinder.Web.Controllers
 {
     public class SearchOfferController : BaseController
     {
-        private const int OffersPerPage = 10;
+        private const int OffersPerPage = 2;
 
         public SearchOfferController(IJobFinderData data) : base(data)
         {
@@ -23,16 +23,9 @@ namespace JobFinder.Web.Controllers
 
         public ActionResult SearchOffers()
         {
-           //IEnumerable<SearchResultOfferViewModel> offers = this.data.JobOffers.All().Select(SearchResultOfferViewModel.FromJobOffer).ToList();
-           //SearchOfferViewModel lastSearch = HttpContext.Session["LastSearch"] as SearchOfferViewModel;
-           //if (HttpContext.Session["LastSearch"] == null)
-           //{
-           //    HttpContext.Session["LastSearch"] = new SearchOfferViewModel();
-           //    lastSearch = new SearchOfferViewModel();
-           //}
-
-            //IEnumerable<SearchResultOfferViewModel> offers = GetResults(lastSearch);
-
+            IEnumerable<SearchResultOfferViewModel> lastTen = this.data.JobOffers.All()
+                .Select(SearchResultOfferViewModel.FromJobOffer).OrderByDescending(o => o.DateCreated).Take(10);
+            lastTen = lastTen.ToPagedList(1, OffersPerPage);
 
             IEnumerable<SelectListItem> towns = this.data.Towns.All().Where(t => !t.IsDeleted)
                 .Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString() })
@@ -42,25 +35,23 @@ namespace JobFinder.Web.Controllers
                 .OrderBy(b => b.Text);
             TempData["Towns"] = towns;
             TempData["BusinessSectors"] = businessSectors;
-            return View(); //offers.ToPagedList(1, 2)
+            return View(lastTen);
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult OfferSearchResults(SearchOfferViewModel model)
+        
+        public ActionResult OfferSearchResults(int? page, int[] sectors, int? town, string word)
         {
-           SearchOfferViewModel lastSearch = HttpContext.Session["LastSearch"] as SearchOfferViewModel;
-           if (model.Page == null)
-           {
-               HttpContext.Session["LastSearch"] = model;
-               lastSearch = model;
-           }
+            SearchOfferViewModel search = new SearchOfferViewModel();
+            search.Page = page ?? 1;
+            search.Sectors = sectors;
+            search.Town = town;
+            search.Word = word;
+            IEnumerable<SearchResultOfferViewModel> offers = GetResults(search);
 
-            IEnumerable<SearchResultOfferViewModel> offers = GetResults(lastSearch);
-            int page = model.Page ?? 1;
+            TempData["Town"] = search.Town;
+            TempData["Word"] = search.Word;
 
-            return View(offers.ToPagedList(page, OffersPerPage));
-            //return this.PartialView("_OfferSearchResultsPartial", offers.ToPagedList(2, 2));
+
+            return View(offers.ToPagedList((int)search.Page, OffersPerPage));
         }
 
         private IEnumerable<JobOffer> FilterOffers(SearchOfferViewModel model)

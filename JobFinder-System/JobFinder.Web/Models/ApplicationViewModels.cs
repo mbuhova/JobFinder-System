@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 
-namespace JobFinder.Web.Areas.Person.Models
+namespace JobFinder.Web.Models
 {
     public class ApplicationViewModel
     {
@@ -15,20 +15,23 @@ namespace JobFinder.Web.Areas.Person.Models
             {
                 return a => new ApplicationViewModel
                 {
-                    FileId = a.Id,
+                    Id = a.Id,
                     FileName = a.FileName,
                     DateUploaded = a.DateUploaded,
+                    IsApproved = a.IsApproved,
                     JobOfferId = a.JobOfferId,
                     JobOfferTitle = a.JobOffer.Title
                 };
             }
         }
 
-        public int FileId { get; set; }
+        public int Id { get; set; }
 
         public string FileName { get; set; }
 
         public DateTime DateUploaded { get; set; }
+
+        public bool? IsApproved { get; set; }
 
         public int JobOfferId { get; set; }
 

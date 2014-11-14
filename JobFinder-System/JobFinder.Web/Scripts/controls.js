@@ -44,7 +44,7 @@
             var element = $('#' + elementId);
             var text = element.text();
             if (text === firstText) {
-                element.text(secondText);
+                element.text(secondText);                
             }
             else {
                 element.text(firstText);

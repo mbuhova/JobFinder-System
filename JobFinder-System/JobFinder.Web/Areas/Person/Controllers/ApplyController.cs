@@ -8,8 +8,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using JobFinder.Web.Areas.Person.Models;
 using System.Data.Entity;
+using JobFinder.Web.Models;
 
 namespace JobFinder.Web.Areas.Person.Controllers
 {

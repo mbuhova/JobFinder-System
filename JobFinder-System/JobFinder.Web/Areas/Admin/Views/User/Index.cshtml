@@ -1,0 +1,54 @@
+﻿@using JobFinder.Web.Areas.Admin.Models
+@{
+    ViewBag.Title = "Users";
+}
+@(Html.Kendo().Grid<CompanyViewModel>().Name("companies").Columns(columns =>
+{
+    columns.Bound(c => c.Id).Hidden();
+    columns.Bound(c => c.Name);
+    columns.Bound(c => c.Bulstat);
+    columns.Bound(c => c.Email);
+    columns.Bound(c => c.IsApproved);
+    columns.Command(c => c.Edit());
+    columns.Command(c => c.Destroy());
+})
+    .Pageable(page => page.Refresh(true))
+    .Sortable()
+    .Filterable()
+        .Editable(edit =>
+        {
+            edit.Mode(GridEditMode.PopUp);
+        })
+    .DataSource(data =>
+    data
+        .Ajax()
+        .Model(m => m.Id(o => o.Id))
+        .Read(read => read.Action("Read", "User"))
+        .Update(update => update.Action("Update", "User"))
+        .Destroy(destroy => destroy.Action("Destroy", "User")))
+)
+
+@*(Html.Kendo().Grid<PersonViewModel>().Name("people").Columns(columns =>
+{
+    columns.Bound(c => c.Id).Hidden();
+    columns.Bound(c => c.FirstName);
+    columns.Bound(c => c.LastName);
+    columns.Bound(c => c.Email);
+    columns.Command(c => c.Edit());
+})
+    .Pageable(page => page.Refresh(true))
+    .Sortable()
+    .Filterable()
+        .Editable(edit =>
+        {
+            edit.Mode(GridEditMode.PopUp);
+        })
+    .DataSource(data =>
+    data
+        .Ajax()
+        .Model(m => m.Id(o => o.Id))
+        .Read(read => read.Action("Read", "User"))
+        .Update(update => update.Action("Update", "User")))
+)*@
+
+

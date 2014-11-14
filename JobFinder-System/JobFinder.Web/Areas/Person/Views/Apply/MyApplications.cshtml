@@ -1,6 +1,6 @@
-﻿@model IEnumerable<JobFinder.Web.Areas.Person.Models.ApplicationViewModel>
+﻿@model IEnumerable<JobFinder.Web.Models.ApplicationViewModel>
 @{
-    ViewBag.Title = "GetDocuments";
+    ViewBag.Title = "My applications";
 }
 
 <h2>My Applications</h2>
@@ -8,9 +8,32 @@
 
 @foreach (var app in Model)
 {
-    <div class="well well-sm">
-        @Html.ActionLink(app.JobOfferTitle, "OfferDetails", "PublicOffer", new { area = "", id = app.JobOfferId }, new { @class = "btn btn-link" })
-        @Html.ActionLink(app.FileName, "DownloadFile", "Apply", new { id = app.FileId }, new { @class = "btn btn-link" })
-        <p>@app.DateUploaded</p>
+    <div class="well well-sm row">
+        <div class="col-md-3">
+            @Html.ActionLink(app.JobOfferTitle, "OfferDetails", "PublicOffer", new { area = "", id = app.JobOfferId }, new { @class = "btn btn-link" })
+            <p>@app.DateUploaded</p>
+        </div>
+        <div class="col-md-3">
+            <span>File sent: </span>
+            @Html.ActionLink(app.FileName, "DownloadFile", "Apply", new { id = app.Id }, new { @class = "btn btn-link" })
+        </div>
+        <div class="col-md-3">
+            <h4>Status: </h4>
+            @if (app.IsApproved == null)
+	        {
+		        <span>Not seen &nbsp;</span>
+                <img src="~/Files/notseen.png" width="30" height="30" />
+            }
+            else if ((bool)app.IsApproved)
+            {
+		        <span>Approved</span>
+                <img src="~/Files/active.png" width="20" height="20" />
+            }
+            else
+            {
+                <span>Rejected</span>
+                <img src="~/Files/expired.png" width="20" height="20" />
+            }
+        </div>
     </div>
 }

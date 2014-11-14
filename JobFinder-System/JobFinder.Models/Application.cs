@@ -22,6 +22,8 @@ namespace JobFinder.Models
 
         public DateTime DateUploaded { get; set; }
 
+        public bool? IsApproved { get; set; }
+
         public string PersonId { get; set; }
         public virtual Person Person { get; set; }
 

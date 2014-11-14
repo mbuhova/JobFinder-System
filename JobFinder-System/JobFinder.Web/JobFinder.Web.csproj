@@ -182,19 +182,21 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BusinessSectorController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\OfferController.cs" />
     <Compile Include="Areas\Admin\Controllers\TownController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Models\BusinessSectorViewModels.cs" />
     <Compile Include="Areas\Admin\Models\TownViewModels.cs" />
+    <Compile Include="Areas\Admin\Models\UserViewModels.cs" />
     <Compile Include="Areas\Company\CompanyAreaRegistration.cs" />
+    <Compile Include="Areas\Company\Controllers\ApplicationController.cs" />
     <Compile Include="Areas\Company\Controllers\BusinessCardController.cs" />
     <Compile Include="Areas\Company\Controllers\JobOfferController.cs" />
     <Compile Include="Areas\Company\Models\BussinessCardViewModels.cs" />
     <Compile Include="Areas\Company\Models\JobOfferViewModels.cs" />
     <Compile Include="Areas\Person\Controllers\ApplyController.cs" />
     <Compile Include="Areas\Person\Controllers\FollowedOffersController.cs" />
-    <Compile Include="Areas\Person\Models\ApplicationViewModels.cs" />
+    <Compile Include="Models\ApplicationViewModels.cs" />
     <Compile Include="Areas\Person\PersonAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -430,6 +432,10 @@
     <Content Include="Content\kendo\Uniform\sprite_2x.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
+    <Content Include="Files\active.png" />
+    <Content Include="Files\expired.png" />
+    <Content Include="Files\notseen.png" />
+    <Content Include="Files\warning.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -458,10 +464,12 @@
     </Content>
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Town\Index.cshtml" />
     <Content Include="Areas\Admin\Views\BusinessSector\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Offer\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <Content Include="Areas\Company\Views\Application\GetApplications.cshtml" />
+    <Content Include="Areas\Person\Views\FollowedOffers\GetFollowedOffers.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -517,16 +525,17 @@
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Shared\_OfferInDetailsPartial.cshtml" />
     <Content Include="Views\PublicOffer\OfferDetails.cshtml" />
-    <Content Include="Views\SearchOffer\_OfferSearchResultsPartial.cshtml" />
     <Content Include="Views\SearchOffer\OfferSearchResults.cshtml" />
     <Content Include="Scripts\kendo\jquery.min.map" />
     <Content Include="Scripts\kendo\kendo.all.min.js.map" />
     <Content Include="Scripts\kendo\kendo.aspnetmvc.min.js.map" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SearchResultOfferViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\BussinessCardViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Person\Views\FollowedOffers\" />
-    <Folder Include="Files\" />
+    <Folder Include="Areas\Person\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

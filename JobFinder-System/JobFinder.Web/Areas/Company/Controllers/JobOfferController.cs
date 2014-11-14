@@ -18,7 +18,7 @@ namespace JobFinder.Web.Areas.Company.Controllers
     {
         //private User currentUser;
 
-        private const int OffersPerPage = 1;
+        private const int OffersPerPage = 10;
 
         public JobOfferController(IJobFinderData data) : base(data)
         {            
@@ -97,6 +97,18 @@ namespace JobFinder.Web.Areas.Company.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult MarkAsExpired(int? id)
+        {
+            if (id != null)
+            {
+                JobOffer offer = this.data.JobOffers.Find((int)id);
+                offer.IsActive = false;
+                this.data.JobOffers.Update(offer);
+            }
+
+            return new EmptyResult();
         }
     }
 }
