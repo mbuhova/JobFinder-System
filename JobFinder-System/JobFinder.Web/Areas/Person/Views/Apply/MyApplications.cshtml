@@ -3,8 +3,10 @@
     ViewBag.Title = "My applications";
 }
 
-<h2>My Applications</h2>
-
+@if (Model.Count == 0)
+{
+    <div>No applications found.</div>
+}
 
 @foreach (var app in Model)
 {
@@ -38,5 +40,8 @@
     </div>
 }
 
- Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("MyApplications", new { page }))
+@section pager {
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("MyApplications", new { page }))
+}
+ 

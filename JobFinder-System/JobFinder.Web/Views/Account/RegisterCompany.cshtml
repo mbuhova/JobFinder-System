@@ -74,11 +74,6 @@
         <label class="col-md-2 control-label">Business sectors</label>
         <span>(Choose up to 3 sectors that apply to your company)</span>
         <div class="col-md-10">
-            @*Html.ListBox("BusinessSectors", ((IEnumerable<JobFinder.Models.BusinessSector>)ViewBag.OriginalSectors).Select(i => new SelectListItem()
-       {
-           Text = i.Name,
-           Value = i.Id.ToString()
-       }), htmlAttributes: new { multiple = "multiple" })*@
             <select id="BusinessSectors" name="BusinessSectors" multiple>
                 @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.OriginalSectors) 
                 {

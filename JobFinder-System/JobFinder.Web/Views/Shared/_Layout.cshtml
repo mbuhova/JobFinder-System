@@ -30,8 +30,17 @@
             </div>
         </div>
     </div>
+    @RenderSection("messages", required: false)
     <div class="container body-content">
-        @RenderBody()
+        <div class=" jumbotron">
+            @if (TempData["Message"] != null)
+            {
+                JobFinder.Web.Models.MessageViewModel message = TempData["Message"] as JobFinder.Web.Models.MessageViewModel;
+                @Html.DisplayFor(m => message);
+            }
+            @RenderBody()
+        </div>
+        @RenderSection("pager", required: false) 
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - JobFinder</p>

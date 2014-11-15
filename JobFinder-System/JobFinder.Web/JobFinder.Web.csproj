@@ -208,6 +208,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MessageViewModel.cs" />
     <Compile Include="Models\OfferViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -468,6 +469,7 @@
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <Content Include="Areas\Company\Views\Application\GetApplications.cshtml" />
     <Content Include="Areas\Person\Views\FollowedOffers\GetFollowedOffers.cshtml" />
+    <Content Include="Areas\Company\Views\JobOffer\_FilterMenuPartial.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -532,6 +534,7 @@
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SearchResultOfferViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BussinessCardViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MessageViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

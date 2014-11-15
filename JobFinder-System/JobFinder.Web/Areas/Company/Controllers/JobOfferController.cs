@@ -16,9 +16,7 @@ namespace JobFinder.Web.Areas.Company.Controllers
     [Authorize(Roles="Company")]
     public class JobOfferController : BaseController
     {
-        //private User currentUser;
-
-        private const int OffersPerPage = 10;
+        private const int OffersPerPage = 5;
 
         public JobOfferController(IJobFinderData data) : base(data)
         {            
@@ -61,7 +59,10 @@ namespace JobFinder.Web.Areas.Company.Controllers
 
             if (model == null)
             {
-                TempData["NotFound"] = "Job offer not found.";
+                MessageViewModel message = new MessageViewModel { Text = "Job offer not found.", Type = MessageType.Error };
+                TempData["Message"] = message;
+                return RedirectToAction("GetOffers", "JobOffer");
+                //TempData["NotFound"] = "Job offer not found.";
             }
 
             return View(model);
@@ -91,7 +92,10 @@ namespace JobFinder.Web.Areas.Company.Controllers
                 offer.CompanyId = companyId;
                 offer.BusinessSectorId = model.BusinessSectorId;
                 this.data.JobOffers.Add(offer);
-                TempData["Success"] = "You have successfully created your job offer.";
+                MessageViewModel message = new MessageViewModel 
+                    { Type = MessageType.Success, Text = "You have successfully created your job offer." };
+                TempData["Message"] = message;
+                //TempData["Success"] = "You have successfully created your job offer.";
                 return RedirectToAction("CreateOffer");
             }
 

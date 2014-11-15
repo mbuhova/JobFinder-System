@@ -1,96 +1,56 @@
 ﻿@model PagedList.IPagedList<JobFinder.Web.Areas.Company.Models.ListOfferViewModel>
 
 @{
-    ViewBag.Title = "GetOffers";
+    ViewBag.Title = "Offers";
 }
 
-@using (Html.BeginForm("GetOffers", "JobOffer", FormMethod.Get, new { @class = "form-horizontal", id = "filter", role = "form" }))
+@if (Model.Count() == 0)
 {
-    <div class="form-group">
-        <label class="col-lg-2 control-label">Filter by</label>
-        <div class="col-lg-10">
-            <div class="radio">
-                <label>
-                    @if (TempData["onlyActive"] != null)
+    <div>No job offers found.</div>
+}
+else
+{
+    @Html.Partial("_FilterMenuPartial")
+        
+    <ul>
+        @foreach (var offer in Model)
+        {
+            <li>
+                @{ string classToAdd = String.Empty;
+                    string filePath = String.Empty;
+                    if (offer.IsActive)
                     {
-                        var active = (bool)TempData["onlyActive"];
-                        if (active)
-                        {
-                            <label>Active</label>
-                            <input type="radio" name="onlyActive" id="active" value="true" checked="">
-                            <br/>
-                            <label>Expired</label>
-                            <input type="radio" name="onlyActive" id="expired" value="false">
-
-                        }
-                        else
-                        {
-                            <label>Active</label>
-                            <input type="radio" name="onlyActive" id="active" value="true">
-                            <br/>
-                            <label>Expired</label>
-                            <input type="radio" name="onlyActive" id="expired" value="false" checked="">
-                        }
-
+                        classToAdd = "row alert-success";
+                        filePath = "active.png";
                     }
                     else
                     {
-                        <label>Active</label>
-                        <input type="radio" name="onlyActive" id="active" value="true">
-                        <br />
-                        <label>Expired</label>
-                        <input type="radio" name="onlyActive" id="expired" value="false">
+                        classToAdd = "row alert-danger";
+                        filePath = "expired.png";
                     }
-                </label>
-            </div>
-        </div>
-    </div>
-}
-
-<div class="jumbotron">
-    @if (Model.Count() == 0)
-    {
-        <div>There is no job offers posted by you.</div>
-    }
-    else
-    {
-        <ul>
-            @foreach (var offer in Model)
-            {
-                <li>
-                    @{ string classToAdd = String.Empty;
-                     string filePath = String.Empty;
-                     if (offer.IsActive)
-                     {
-                         classToAdd = "row alert-success";
-                         filePath = "active.png";
-                     }
-                     else
-                     {
-                         classToAdd = "row alert-danger";
-                         filePath = "expired.png";
-                     }
-                    }
-                    <div class="@classToAdd">
-                        <div class="col-lg-3">
-                            @Html.ActionLink(offer.Title, "OfferDetails", "JobOffer", new { id = offer.Id }, new { @class = "btn btn-link" })
-                        </div>
-                        <div class="col-lg-4">
-                            <span class="text-muted"><em>@Html.DisplayFor(m => offer.DateCreated)</em></span>
-                        </div>
-                        <div class="col-lg-offset-10">
-                            <img src="~/Files/@filePath" width="20" height="20" />
-                        </div>
+                }
+                <div class="@classToAdd">
+                    <div class="col-lg-3">
+                        @Html.ActionLink(offer.Title, "OfferDetails", "JobOffer", new { id = offer.Id }, new { @class = "btn btn-link" })
                     </div>
-                </li>
-            }
-        </ul>
-    }
-</div>
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-@*Html.PagedListPager(Model, page => Url.Action("GetOffers", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "results" }))*@
+                    <div class="col-lg-4">
+                        <span class="text-muted"><em>@Html.DisplayFor(m => offer.DateCreated)</em></span>
+                    </div>
+                    <div class="col-lg-offset-10">
+                        <img src="~/Files/@filePath" width="20" height="20" />
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+} 
 
-@Html.PagedListPager(Model, page => Url.Action("GetOffers", new { page, onlyActive = @TempData["onlyActive"] }))
+@section pager {
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @*Html.PagedListPager(Model, page => Url.Action("GetOffers", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "results" }))*@
+
+    @Html.PagedListPager(Model, page => Url.Action("GetOffers", new { page, onlyActive = @TempData["onlyActive"] }))
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

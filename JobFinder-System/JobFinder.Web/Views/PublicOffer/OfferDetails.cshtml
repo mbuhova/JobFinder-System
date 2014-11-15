@@ -9,7 +9,7 @@
     if (User.IsInRole("Person"))
     {
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-4">
                 @if (!(bool)TempData["HasApplied"])
                 {
                     @Html.ActionLink("Apply", "ApplyForOffer", "Apply", new { area = "Person", id = Model.Id }, new { @class = "btn btn-primary" })
@@ -34,7 +34,6 @@
 }
 else
 {
-    <div class="jumbotron">
         <div class="row">
             <div class="col-lg-2">
                 <img src="~/Files/warning.png" width="60" height="60" />
@@ -43,7 +42,6 @@ else
                 <h2>Expired job offer.</h2>
             </div>
         </div>
-    </div>
 }
 
 @section Scripts {

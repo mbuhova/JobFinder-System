@@ -1,13 +1,11 @@
 ﻿@model JobFinder.Web.Models.SearchResultOfferViewModel
 
 <div class="row">
-    <p class="text-muted"><em>@Model.DateCreated.Day/@Model.DateCreated.Month/@Model.DateCreated.Year</em></p>
     <div class="col-md-3">
         @Html.ActionLink(Model.Title, "OfferDetails", "PublicOffer", new { area = "", id = Model.Id }, new { @class = "btn btn-link offerHeader" })
+        <p class="text-muted"><em>@Model.Town @Html.DisplayFor(m => m.DateCreated)</em></p>
     </div>
     <div class="col-md-3">
         @Html.ActionLink(Model.CompanyName, "GetCompanyBusinessCard", "PublicOffer", new { area = "", id = Model.CompanyId }, null)
     </div>
 </div>
-<p class="text-muted"><em>@Model.Town</em></p>
-<hr />

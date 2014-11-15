@@ -1,48 +1,32 @@
 ﻿@model JobFinder.Web.Models.DetailsOfferViewModel
 
 @{
-    ViewBag.Title = "OfferDetails";
+    ViewBag.Title = "Offer details";
 }
 
-@if (TempData["NotFound"] != null)
-{
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-lg-2">
-                <img src="~/Files/warning.png" width="60" height="60" />
-            </div>
-            <div class="col-lg-5">
-                <h2>@TempData["NotFound"]</h2>
-            </div>
-        </div>
-    </div>
-}
-else
-{
-    @Html.Partial("~/Views/Shared/_OfferInDetailsPartial.cshtml")
+@Html.Partial("~/Views/Shared/_OfferInDetailsPartial.cshtml")
 
-    <div class="row">
-        <div class="col-lg-3">
-            @{
-    string buttonText = Model.IsActive ? "Mark as expired" : "EXPIRED OFFER";
-    string buttonClass = Model.IsActive ? "btn btn-danger" : "btn btn-danger disabled";
-            }
-            @Ajax.ActionLink(buttonText, "MarkAsExpired", "JobOffer", new { area = "Company", id = Model.Id },
-                  new AjaxOptions
-                  {
-                      HttpMethod = "GET"
-                  }, new { @class = buttonClass, id = "expiredButton" })
-            <br />
-            <br />
-            <strong>You can't undo this action.</strong>
-            <br />
-            <span><em>If you mark your offer as expired no one will be able to see it and apply for it.</em></span>
-        </div>
-        <div class="col-lg-offset-6">
-            @Html.ActionLink("View applications", "GetApplications", "Application", new { area = "Company", id = Model.Id }, new { @class = "btn btn-primary" })
-        </div>
+<div class="row">
+    <div class="col-lg-3">
+        @{
+            string buttonText = Model.IsActive ? "Mark as expired" : "EXPIRED OFFER";
+            string buttonClass = Model.IsActive ? "btn btn-danger" : "btn btn-danger disabled";
+        }
+        @Ajax.ActionLink(buttonText, "MarkAsExpired", "JobOffer", new { area = "Company", id = Model.Id },
+                new AjaxOptions
+                {
+                    HttpMethod = "GET"
+                }, new { @class = buttonClass, id = "expiredButton" })
+        <br />
+        <br />
+        <strong>You can't undo this action.</strong>
+        <br />
+        <span><em>If you mark your offer as expired no one will be able to see it and apply for it.</em></span>
     </div>
-}
+    <div class="col-lg-offset-6">
+        @Html.ActionLink("View applications", "GetApplications", "Application", new { area = "Company", id = Model.Id }, new { @class = "btn btn-primary" })
+    </div>
+</div>
 
 @section scripts {
     <script>

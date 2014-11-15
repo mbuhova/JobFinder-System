@@ -157,7 +157,6 @@ namespace JobFinder.Data.Migrations
                     manager.AddToRole(person.Id, "Person");
                 }
             }
-
         }
     }
 }

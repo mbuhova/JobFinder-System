@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using JobFinder.Models;
+using JobFinder.Web.Models;
 
 namespace JobFinder.Web.Areas.Company.Controllers
 {
@@ -44,13 +45,19 @@ namespace JobFinder.Web.Areas.Company.Controllers
 
             if (!ModelState.IsValid)
             {
-                TempData["InvalidModel"] = "Company name is required. Please try again.";
+                MessageViewModel message = new MessageViewModel 
+                { Text = "Company name is required. Please try again.", Type = MessageType.Error };
+                TempData["Message"] = message;
+                //TempData["InvalidModel"] = "Company name is required. Please try again.";
                 return RedirectToAction("GetBusinessCard", "BusinessCard");
             }
 
             if (model.BusinessSectors == null)
             {
-                TempData["InvalidModel"] = "Please select at least one business sector.";
+                MessageViewModel message = new MessageViewModel 
+                { Text = "Please select at least one business sector.", Type = MessageType.Error };
+                TempData["Message"] = message;
+                //TempData["InvalidModel"] = "Please select at least one business sector.";
                 return RedirectToAction("GetBusinessCard", "BusinessCard");
             }
 
@@ -61,7 +68,10 @@ namespace JobFinder.Web.Areas.Company.Controllers
             company.WebSite = model.WebSite;
             AddBusinessSectors(model.BusinessSectors, company.Id);
 
-            TempData["Success"] = "Your changes are saved.";
+            MessageViewModel successMessage = new MessageViewModel 
+            { Text = "Your changes are saved.", Type = MessageType.Success };
+            TempData["Message"] = successMessage;
+            //TempData["Success"] = "Your changes are saved.";
             return RedirectToAction("GetBusinessCard", "BusinessCard");
         }
 

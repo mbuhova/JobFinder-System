@@ -70,7 +70,10 @@ namespace JobFinder.Web.Controllers
 
             if (model == null)
             {
-                TempData["NotFound"] = "Company not found.";
+                MessageViewModel message = new MessageViewModel { Type = MessageType.Error, Text = "Company not found." };
+                TempData["Message"] = message;
+                return RedirectToAction("SearchOffers", "SearchOffer");
+                //TempData["NotFound"] = "Company not found.";
             }
 
             return View("BussinessCard", model);

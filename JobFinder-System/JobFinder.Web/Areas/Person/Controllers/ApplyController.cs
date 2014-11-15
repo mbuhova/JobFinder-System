@@ -41,53 +41,15 @@ namespace JobFinder.Web.Areas.Person.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ApplyForOffer(HttpPostedFileBase file)
         {
-            string personId = User.Identity.GetUserId();            
-            var routeId = RouteData.Values["id"];
+            bool isValid = IsValidRequest(file);
 
-            if (routeId == null)
+            if (!IsValidRequest(file))
             {
-                TempData["NotAllowedFile"] = "Select a offer";
                 return RedirectToAction("ApplyForOffer");
             }
 
-            string id = routeId.ToString();
-
-            if (String.IsNullOrEmpty(id))
-            {
-                TempData["NotAllowedFile"] = "Select a offer";
-                return RedirectToAction("ApplyForOffer");
-            }
-
-            int offerId = int.Parse(id);
-            Application doc = this.data.Applications.All().Where(d => d.JobOfferId == offerId && d.PersonId == personId).FirstOrDefault();
-
-            if (doc != null)
-            {
-                TempData["AlreadyApplied"] = "You have already applied for this offer.";
-                return RedirectToAction("ApplyForOffer");
-            }
-
-            var allowedExtensions = new[] { ".pdf", ".doc", ".docx" };
+            int offerId = int.Parse(RouteData.Values["id"].ToString());
             Application cv = new Application();
-
-            if (file == null)
-            {
-                TempData["NotAllowedFile"] = "Please select a file to upload (.doc, .docx or .pdf format).";
-                return RedirectToAction("ApplyForOffer");
-            }
-
-            var extension = Path.GetExtension(file.FileName);
-            if (!allowedExtensions.Contains(extension))
-            {
-                TempData["NotAllowedFile"] = "Please upload file in .doc, .docx or .pdf format.";
-                return RedirectToAction("ApplyForOffer");
-            }
-
-            if (file.ContentLength > MaxFileSize)
-            {
-                TempData["NotAllowedFile"] = "Please upload file with size less than 1 MB.";
-                return RedirectToAction("ApplyForOffer");
-            }
 
             byte[] fileData = new byte[file.InputStream.Length];
             file.InputStream.Read(fileData, 0, Convert.ToInt32(file.InputStream.Length));
@@ -104,7 +66,9 @@ namespace JobFinder.Web.Areas.Person.Controllers
             offer.ApplicationsCount += 1;
             this.data.JobOffers.Update(offer);
 
-            TempData["Success"] = "Your application was successfull. Good luck!";
+            MessageViewModel message = new MessageViewModel 
+            { Text = "Your application was successfull. Good luck!", Type = MessageType.Success };
+            TempData["Message"] = message;
             return RedirectToAction("ApplyForOffer");
         }
 
@@ -129,6 +93,73 @@ namespace JobFinder.Web.Areas.Person.Controllers
             //Response.AppendHeader("Content-Disposition", "inline; filename=" + cv.FileName);
             //return File(cv.FileData, mimeType);
             return File(cv.FileData, cv.ContentType, cv.FileName);
+        }
+
+        private bool IsValidRequest(HttpPostedFileBase file)
+        {
+            string personId = User.Identity.GetUserId();
+            var routeId = RouteData.Values["id"];
+            MessageViewModel message = null;
+
+            if (routeId == null)
+            {
+                message = new MessageViewModel { Type = MessageType.Error, Text = "Select a offer" };
+                TempData["Message"] = message;
+                return false;
+            }
+
+            string id = routeId.ToString();
+
+            if (String.IsNullOrEmpty(id))
+            {
+                message = new MessageViewModel { Type = MessageType.Error, Text = "Select a offer" };
+                TempData["Message"] = message;
+                return false;
+            }
+
+            int offerId = int.Parse(id);
+            Application doc = this.data.Applications.All().Where(d => d.JobOfferId == offerId && d.PersonId == personId).FirstOrDefault();
+
+            if (doc != null)
+            {
+                message = new MessageViewModel { Type = MessageType.Error, Text = "You have already applied for this offer." };
+                TempData["Message"] = message;
+                return false;
+            }
+
+            JobOffer offer = this.data.JobOffers.Find(offerId);
+            if (offer == null)
+            {
+                message = new MessageViewModel { Type = MessageType.Error, Text = "Job offer you are appling for doesnt exist." };
+                TempData["Message"] = message;
+                return false;
+            }
+
+            var allowedExtensions = new[] { ".pdf", ".doc", ".docx" };
+
+            if (file == null)
+            {
+                message = new MessageViewModel { Type = MessageType.Error, Text = "Please select a file to upload (.doc, .docx or .pdf format)." };
+                TempData["Message"] = message;
+                return false;
+            }
+
+            var extension = Path.GetExtension(file.FileName);
+            if (!allowedExtensions.Contains(extension))
+            {
+                message = new MessageViewModel { Type = MessageType.Error, Text = "Please upload file in .doc, .docx or .pdf format." };
+                TempData["Message"] = message;
+                return false;
+            }
+
+            if (file.ContentLength > MaxFileSize)
+            {
+                message = new MessageViewModel { Type = MessageType.Error, Text = "Please upload file with size less than 1 MB." };
+                TempData["Message"] = message;
+                return false;
+            }
+
+            return true;
         }
     }
 }

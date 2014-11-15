@@ -5,17 +5,9 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("CreateOffer", "JobOffer", FormMethod.Post, new { @class = "form-horizontal jumbotron", role = "form" }))
+@using (Html.BeginForm("CreateOffer", "JobOffer", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    @Html.AntiForgeryToken()
-    if (TempData["Success"] != null)
-    {
-        <div class="alert alert-dismissable alert-success">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            @TempData["Success"]
-        </div>
-    }
-    <hr />
+    @Html.AntiForgeryToken()   
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(o => o.Title, new { @class = "col-md-2 control-label" })
