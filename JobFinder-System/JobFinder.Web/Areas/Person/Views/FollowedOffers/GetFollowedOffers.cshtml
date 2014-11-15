@@ -14,8 +14,5 @@
     }
 </ul>
 
-<div class="row" id="pager">
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-    @Html.PagedListPager(Model, page => Url.Action("OfferSearchResults", new { page }))
-</div>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("GetFollowedOffers", new { page }))

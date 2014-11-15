@@ -2,20 +2,36 @@
 
 <h3>Found offers: @TempData["OffersCount"]</h3>
 
-@if (Model != null)
-{
-    <ul class="listOffers">
-        @foreach (var offer in Model)
-        {
-            <li>
-                @Html.DisplayFor(m => offer)
-            </li>
-        }
-    </ul>
+<ul class="listOffers">
+    @foreach (var offer in Model)
+    {
+        <li>
+            @Html.DisplayFor(m => offer)
+        </li>
+    }
+</ul>
+@{
+    string town = null;
+    string word = null;
+    int[] sectors = null;
+    if (TempData["Town"] != null)
+    {
+        town = TempData["Town"].ToString();        
+    }
+    if (TempData["Word"] != null)
+    {
+        word = TempData["Word"].ToString();
+    }
+    if (TempData["Sectors"] != null)
+    {
+        sectors = (int[])TempData["Sectors"];
+    }
 }
+
+
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("OfferSearchResults",
-        new { page }))
+        new { page, town, word, sectors }))
 
 
 

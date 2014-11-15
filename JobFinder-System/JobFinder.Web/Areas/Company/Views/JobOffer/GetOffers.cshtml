@@ -4,7 +4,6 @@
     ViewBag.Title = "GetOffers";
 }
 
-
 @using (Html.BeginForm("GetOffers", "JobOffer", FormMethod.Get, new { @class = "form-horizontal", id = "filter", role = "form" }))
 {
     <div class="form-group">
@@ -77,7 +76,7 @@
                             @Html.ActionLink(offer.Title, "OfferDetails", "JobOffer", new { id = offer.Id }, new { @class = "btn btn-link" })
                         </div>
                         <div class="col-lg-4">
-                            <span class="text-muted"><em>@offer.DateCreated</em></span>
+                            <span class="text-muted"><em>@Html.DisplayFor(m => offer.DateCreated)</em></span>
                         </div>
                         <div class="col-lg-offset-10">
                             <img src="~/Files/@filePath" width="20" height="20" />

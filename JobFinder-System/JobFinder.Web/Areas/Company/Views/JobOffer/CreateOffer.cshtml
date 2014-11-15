@@ -5,10 +5,9 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("CreateOffer", "JobOffer", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("CreateOffer", "JobOffer", FormMethod.Post, new { @class = "form-horizontal jumbotron", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new job offer.</h4>
     if (TempData["Success"] != null)
     {
         <div class="alert alert-dismissable alert-success">

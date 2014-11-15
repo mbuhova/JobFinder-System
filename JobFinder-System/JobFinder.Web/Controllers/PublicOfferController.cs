@@ -21,12 +21,13 @@ namespace JobFinder.Web.Controllers
         // GET: PublicOffer
         public ActionResult OfferDetails(int? id)
         {
-            if (id == null)
+            JobOffer offer = this.data.JobOffers.Find((int)id);
+
+            if (id == null || offer == null)
             {
                 return RedirectToAction("SearchOffers", "SearchOffer");
             }
 
-            JobOffer offer = this.data.JobOffers.Find((int)id);
             offer.Views += 1;
             this.data.JobOffers.Update(offer);
             
@@ -36,11 +37,9 @@ namespace JobFinder.Web.Controllers
             if (Request.IsAuthenticated && User.IsInRole("Person"))
             {
                 string personId = this.User.Identity.GetUserId();
-
                 Application app = this.data.Applications.All().Where(a => a.PersonId == personId && a.JobOfferId == model.Id)
                     .Include("Person").FirstOrDefault();
                 TempData["HasApplied"] = (app == null) ? false : true;
-
                 Person current = this.data.People.Find(personId);
 
                 if (offer.PeopleFollowing.Contains(current))
@@ -58,11 +57,21 @@ namespace JobFinder.Web.Controllers
 
         public ActionResult GetCompanyBusinessCard(string id)
         {
+            if (String.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("SearchOffers", "SearchOffer");
+            }
+
             BussinessCardViewModel model = this.data.Companies.All().Where(c => c.Id == id)
                 .Select(BussinessCardViewModel.FromCompany).FirstOrDefault();
 
             TempData["Sectors"] = this.data.BusinessSectors.All()
                 .Select(s => new SelectListItem { Text = s.Name, Value = s.Id.ToString() });
+
+            if (model == null)
+            {
+                TempData["NotFound"] = "Company not found.";
+            }
 
             return View("BussinessCard", model);
         }

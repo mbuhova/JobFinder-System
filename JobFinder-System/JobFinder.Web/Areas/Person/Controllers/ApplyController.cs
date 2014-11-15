@@ -10,13 +10,16 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using JobFinder.Web.Models;
+using PagedList;
 
 namespace JobFinder.Web.Areas.Person.Controllers
 {
     [Authorize(Roles="Person")]
     public class ApplyController : BaseController
     {
-        private const int MaxFileSize = 4 * 1024 * 1024;
+        private const int MaxFileSize = 1024 * 1024;
+
+        private const int PageSize = 5;
 
         public ApplyController(IJobFinderData data) : base(data)
         {
@@ -29,10 +32,8 @@ namespace JobFinder.Web.Areas.Person.Controllers
             return View();
         }
 
-        public ActionResult ApplyForOffer() //int id
+        public ActionResult ApplyForOffer()
         {
-            //return View();
-
             return View();
         }
 
@@ -40,9 +41,7 @@ namespace JobFinder.Web.Areas.Person.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ApplyForOffer(HttpPostedFileBase file)
         {
-            string personId = User.Identity.GetUserId();
-            
-            
+            string personId = User.Identity.GetUserId();            
             var routeId = RouteData.Values["id"];
 
             if (routeId == null)
@@ -55,13 +54,11 @@ namespace JobFinder.Web.Areas.Person.Controllers
 
             if (String.IsNullOrEmpty(id))
             {
-                //TODO change this
                 TempData["NotAllowedFile"] = "Select a offer";
                 return RedirectToAction("ApplyForOffer");
             }
 
             int offerId = int.Parse(id);
-
             Application doc = this.data.Applications.All().Where(d => d.JobOfferId == offerId && d.PersonId == personId).FirstOrDefault();
 
             if (doc != null)
@@ -71,7 +68,6 @@ namespace JobFinder.Web.Areas.Person.Controllers
             }
 
             var allowedExtensions = new[] { ".pdf", ".doc", ".docx" };
-
             Application cv = new Application();
 
             if (file == null)
@@ -89,7 +85,7 @@ namespace JobFinder.Web.Areas.Person.Controllers
 
             if (file.ContentLength > MaxFileSize)
             {
-                TempData["NotAllowedFile"] = "Please upload file with size less than 4 MB.";
+                TempData["NotAllowedFile"] = "Please upload file with size less than 1 MB.";
                 return RedirectToAction("ApplyForOffer");
             }
 
@@ -112,13 +108,15 @@ namespace JobFinder.Web.Areas.Person.Controllers
             return RedirectToAction("ApplyForOffer");
         }
 
-        public ActionResult MyApplications()
+        public ActionResult MyApplications(int? page)
         {
             string personId = User.Identity.GetUserId();
 
             IEnumerable<ApplicationViewModel> model = this.data.Applications.All().Where(d => d.PersonId == personId)
                 .AsQueryable().Include("Company").Select(ApplicationViewModel.FromApplication)
                 .OrderByDescending(a => a.DateUploaded);
+            int pageNumber = page ?? 1;
+            model = model.ToPagedList(pageNumber, PageSize);
             return View(model);
         }
 

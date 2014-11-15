@@ -33,11 +33,10 @@ namespace JobFinder.Web.Areas.Company.Controllers
         public ActionResult GetOffers(int? page, bool? onlyActive)
         {
             string companyId = User.Identity.GetUserId();
-
             int pageNumber = page ?? 1;
 
             IEnumerable<ListOfferViewModel> model = this.data.JobOffers.All().Where(o => o.CompanyId == companyId)
-                .OrderByDescending(o => o.DateCreated).Select(ListOfferViewModel.FromJobOffer);//.ToPagedList(pageNumber, OffersPerPage);
+                .OrderByDescending(o => o.DateCreated).Select(ListOfferViewModel.FromJobOffer);
 
             if (onlyActive != null)
             {
@@ -46,10 +45,6 @@ namespace JobFinder.Web.Areas.Company.Controllers
             }
 
             model = model.ToPagedList(pageNumber, OffersPerPage);
-            //int skipPages = (page == null || page <= 0) ? 0 : (int)page - 1;
-            //IEnumerable<ListOfferViewModel> model = this.data.JobOffers.All().Where(o => o.CompanyId == companyId)
-            //    .OrderByDescending(o => o.DateCreated).Skip(skipPages * OffersPerPage).Take(OffersPerPage).
-            //    Select(ListOfferViewModel.FromJobOffer);
             return View(model);
         }
 
@@ -60,11 +55,15 @@ namespace JobFinder.Web.Areas.Company.Controllers
                 return RedirectToAction("GetOffers");
             }
 
-            string companyId = User.Identity.GetUserId();
-            
+            string companyId = User.Identity.GetUserId();            
             DetailsOfferViewModel model = this.data.JobOffers.All().Where(o => o.Id == id && o.CompanyId == companyId)
                 .Select(DetailsOfferViewModel.FromJobOffer).FirstOrDefault();
-            //return View("~/Views/PublicOffer/OfferDetails.cshtml", model);
+
+            if (model == null)
+            {
+                TempData["NotFound"] = "Job offer not found.";
+            }
+
             return View(model);
         }
 
@@ -104,8 +103,11 @@ namespace JobFinder.Web.Areas.Company.Controllers
             if (id != null)
             {
                 JobOffer offer = this.data.JobOffers.Find((int)id);
-                offer.IsActive = false;
-                this.data.JobOffers.Update(offer);
+                if (offer != null)
+                {
+                    offer.IsActive = false;
+                    this.data.JobOffers.Update(offer);
+                }               
             }
 
             return new EmptyResult();

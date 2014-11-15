@@ -443,13 +443,11 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Company\Views\web.config" />
     <Content Include="Areas\Company\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Company\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Company\Views\JobOffer\CreateOffer.cshtml" />
     <Content Include="Areas\Company\Views\JobOffer\GetOffers.cshtml" />
     <Content Include="Areas\Company\Views\JobOffer\OfferDetails.cshtml" />
     <Content Include="Areas\Person\Views\web.config" />
     <Content Include="Areas\Person\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Person\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Person\Views\Apply\ApplyForOffer.cshtml" />
     <Content Include="Areas\Person\Views\Apply\MyApplications.cshtml" />
     <Content Include="Scripts\kendo\jquery.min.js" />
@@ -485,7 +483,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\controls.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -535,7 +535,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Company\Views\Shared\" />
     <Folder Include="Areas\Person\Models\" />
+    <Folder Include="Areas\Person\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

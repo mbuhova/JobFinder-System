@@ -15,7 +15,7 @@ namespace JobFinder.Web.Controllers
 {
     public class SearchOfferController : BaseController
     {
-        private const int OffersPerPage = 2;
+        private const int OffersPerPage = 5;
 
         public SearchOfferController(IJobFinderData data) : base(data)
         {
@@ -23,10 +23,6 @@ namespace JobFinder.Web.Controllers
 
         public ActionResult SearchOffers()
         {
-            IEnumerable<SearchResultOfferViewModel> lastTen = this.data.JobOffers.All()
-                .Select(SearchResultOfferViewModel.FromJobOffer).OrderByDescending(o => o.DateCreated).Take(10);
-            lastTen = lastTen.ToPagedList(1, OffersPerPage);
-
             IEnumerable<SelectListItem> towns = this.data.Towns.All().Where(t => !t.IsDeleted)
                 .Select(t => new SelectListItem { Text = t.Name, Value = t.Id.ToString() })
                 .OrderBy(t => t.Text);
@@ -35,7 +31,7 @@ namespace JobFinder.Web.Controllers
                 .OrderBy(b => b.Text);
             TempData["Towns"] = towns;
             TempData["BusinessSectors"] = businessSectors;
-            return View(lastTen);
+            return View();
         }
         
         public ActionResult OfferSearchResults(int? page, int[] sectors, int? town, string word)
@@ -49,7 +45,7 @@ namespace JobFinder.Web.Controllers
 
             TempData["Town"] = search.Town;
             TempData["Word"] = search.Word;
-
+            TempData["Sectors"] = sectors;
 
             return View(offers.ToPagedList((int)search.Page, OffersPerPage));
         }
@@ -103,7 +99,6 @@ namespace JobFinder.Web.Controllers
 
         private IEnumerable<SearchResultOfferViewModel> GetResults(SearchOfferViewModel lastSearch)
         {
-            //int skipPages = (lastSearch.Page == null || lastSearch.Page <= 0) ? 0 : (int)lastSearch.Page - 1;
             int offersCount = 0;
 
             IEnumerable<SearchResultOfferViewModel> offers = FilterOffers(lastSearch).AsQueryable().Include("Company").Include("Town")
@@ -111,7 +106,6 @@ namespace JobFinder.Web.Controllers
 
             offersCount = offers.Count();
 
-            //offers = offers.Skip(skipPages * OffersPerPage).Take(OffersPerPage).ToList();
             TempData["OffersCount"] = offersCount;
             return offers;
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobFinder.Models
 {
@@ -18,6 +19,8 @@ namespace JobFinder.Models
         public int Id { get; set; }
 
         [Required]
+        [Index(IsUnique=true)]
+        [MaxLength(20)]
         public string Name { get; set; }
 
         public virtual ICollection<JobOffer> JobOffers { get; set; }

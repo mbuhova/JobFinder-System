@@ -16,7 +16,7 @@ namespace JobFinder.Web.Areas.Company.Controllers
     [Authorize(Roles="Company")]
     public class ApplicationController : BaseController
     {
-        private const int ApplicationsPerPage = 2;
+        private const int ApplicationsPerPage = 5;
 
         public ApplicationController(IJobFinderData data) : base(data)
         {

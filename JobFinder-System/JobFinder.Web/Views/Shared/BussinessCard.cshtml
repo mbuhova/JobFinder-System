@@ -19,17 +19,31 @@
             <strong>@TempData["Success"]</strong>
         </div>
     }
-    
-    @Html.DisplayFor(m => m)
-
-    @if (HttpContext.Current.User.IsInRole("Company") && User.Identity.GetUserId() == Model.Id)
+    @if (TempData["NotFound"] != null)
     {
-        <button id="editButton" class="btn btn-primary">Edit</button>
-        <hr/>
-        <div id = "editForm">
-            @Html.Partial("~/Areas/Company/Views/BusinessCard/_EditCardPartial.cshtml")
-        </div>   
+        <div class="row">
+            <div class="col-lg-2">
+                <img src="~/Files/warning.png" width="60" height="60" />
+            </div>
+            <div class="col-lg-5">
+                <h2>@TempData["NotFound"]</h2>
+            </div>
+        </div>
     }
+    else
+    {
+        @Html.DisplayFor(m => m)
+
+        if (HttpContext.Current.User.IsInRole("Company") && User.Identity.GetUserId() == Model.Id)
+        {
+            <button id="editButton" class="btn btn-primary">Edit</button>
+            <hr />
+            <div id="editForm">
+                @Html.Partial("~/Areas/Company/Views/BusinessCard/_EditCardPartial.cshtml")
+            </div>
+        }
+    }
+   
 </div>
 
 @section Scripts {

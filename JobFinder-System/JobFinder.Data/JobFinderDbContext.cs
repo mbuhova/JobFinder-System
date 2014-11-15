@@ -32,5 +32,7 @@ namespace JobFinder.Data
         public IDbSet<Application> Applications { get; set; }
 
         public IDbSet<JobOffer> JobOffers { get; set; }
+
+        public IDbSet<Town> Towns { get; set; }
     }
 }

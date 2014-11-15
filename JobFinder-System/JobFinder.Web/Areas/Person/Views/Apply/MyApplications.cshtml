@@ -1,4 +1,4 @@
-﻿@model IEnumerable<JobFinder.Web.Models.ApplicationViewModel>
+﻿@model PagedList.IPagedList<JobFinder.Web.Models.ApplicationViewModel>
 @{
     ViewBag.Title = "My applications";
 }
@@ -11,7 +11,7 @@
     <div class="well well-sm row">
         <div class="col-md-3">
             @Html.ActionLink(app.JobOfferTitle, "OfferDetails", "PublicOffer", new { area = "", id = app.JobOfferId }, new { @class = "btn btn-link" })
-            <p>@app.DateUploaded</p>
+            <p>@Html.DisplayFor(m => app.DateUploaded)</p>
         </div>
         <div class="col-md-3">
             <span>File sent: </span>
@@ -37,3 +37,6 @@
         </div>
     </div>
 }
+
+ Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("MyApplications", new { page }))

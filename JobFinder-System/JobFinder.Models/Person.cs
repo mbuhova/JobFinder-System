@@ -17,8 +17,10 @@ namespace JobFinder.Models
             this.Applications = new HashSet<Application>();
         }
 
+        [Required]
         public string FirstName { get; set; }
 
+        [Required]
         public string LastName { get; set; }
 
         public virtual ICollection<JobOffer> FollowedOffers { get; set; }
