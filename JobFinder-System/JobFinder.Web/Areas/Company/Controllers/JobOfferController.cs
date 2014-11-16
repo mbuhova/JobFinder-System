@@ -22,12 +22,6 @@ namespace JobFinder.Web.Areas.Company.Controllers
         {            
         }
 
-        // GET: Company/JobOffer
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult GetOffers(int? page, bool? onlyActive)
         {
             string companyId = User.Identity.GetUserId();

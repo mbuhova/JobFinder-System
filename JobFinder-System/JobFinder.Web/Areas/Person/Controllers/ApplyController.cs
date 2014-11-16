@@ -25,13 +25,6 @@ namespace JobFinder.Web.Areas.Person.Controllers
         {
         }
 
-
-        // GET: Person/Apply
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult ApplyForOffer()
         {
             return View();

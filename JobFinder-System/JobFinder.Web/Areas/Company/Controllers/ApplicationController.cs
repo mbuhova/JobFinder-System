@@ -22,12 +22,6 @@ namespace JobFinder.Web.Areas.Company.Controllers
         {
         }
 
-        // GET: Company/Application
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult GetApplications(int? id, int? page, string approved, string rejected, string notSeen)
         {
             int pageNumber = page ?? 1;

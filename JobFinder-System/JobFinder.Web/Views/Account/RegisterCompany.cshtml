@@ -3,8 +3,6 @@
     ViewBag.Title = "Register Company";
 }
 
-<h2>@ViewBag.Title.</h2>
-
 @if (TempData["WaitingApproval"] != null)
 {
     <div class="alert alert-dismissable alert-success">
@@ -35,45 +33,45 @@
 	}
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(m => m.Bulstat, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        @Html.LabelFor(m => m.Bulstat, new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
             @Html.TextBoxFor(m => m.Bulstat, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.CompanyName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        @Html.LabelFor(m => m.CompanyName, new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
             @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        @Html.LabelFor(m => m.Phone, new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
             @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-3 control-label" })
+        <div class="col-md-9">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
-        <label class="col-md-2 control-label">Business sectors</label>
+        <label class="col-md-3 control-label">Business sectors</label>
         <span>(Choose up to 3 sectors that apply to your company)</span>
-        <div class="col-md-10">
+        <div class="col-md-9">
             <select id="BusinessSectors" name="BusinessSectors" multiple>
                 @foreach (var item in (IEnumerable<SelectListItem>)ViewBag.OriginalSectors) 
                 {
@@ -84,7 +82,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-offset-3 col-md-9">
             <input type="submit" class="btn btn-default" value="Register" />
         </div>
     </div>

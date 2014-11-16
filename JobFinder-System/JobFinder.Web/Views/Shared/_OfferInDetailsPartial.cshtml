@@ -1,5 +1,4 @@
 ﻿@model JobFinder.Web.Models.DetailsOfferViewModel
-<div class="jumbotron">
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">Offer details</h3>
@@ -10,7 +9,7 @@
                     <h4>Title:</h4>
                 </div>
                 <div class="col-md-4">
-                    <p class="text-primary">@Model.Title</p>
+                    <p>@Model.Title</p>
                 </div>
                 <div class="col-md-offset-10">
                     <p class="text-muted">Views: @Model.Views</p>
@@ -22,14 +21,14 @@
                     <h4>Description:</h4>
                 </div>
                 <div class="col-md-4">
-                    <p class="text-primary">@Model.Description</p>
+                    <p style="font-size:17px">@Model.Description</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-2">
                     <h4>Date posted:</h4>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" style="font-size:17px">
                     @Html.DisplayFor(o => o.DateCreated)
                 </div>
             </div>
@@ -38,7 +37,7 @@
                     <h4>Location:</h4>
                 </div>
                 <div class="col-md-4">
-                    <p class="text-primary">@Model.Town</p>
+                    <p class="text-muted" style="font-size:17px">@Model.Town</p>
                 </div>
             </div>
             <div class="row">
@@ -46,9 +45,8 @@
                     <h4>Business sector:</h4>
                 </div>
                 <div class="col-md-4">
-                    <p class="text-primary">@Model.BusinessSector</p>
+                    <p class="text-muted" style="font-size:17px">@Model.BusinessSector</p>
                 </div>
             </div>
         </div>
     </div>
-</div>

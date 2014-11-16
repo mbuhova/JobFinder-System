@@ -17,5 +17,10 @@ namespace JobFinder.Web.Controllers
         {
             this.data = data;                     
         }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }

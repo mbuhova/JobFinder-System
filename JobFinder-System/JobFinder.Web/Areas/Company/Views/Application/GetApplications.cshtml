@@ -6,7 +6,8 @@
     bool notSeen = (bool)TempData["notSeen"];
 }
 
-<h2>Applications</h2>
+@Html.Partial("_FilterApplicationsMenuPartial")
+
 
 @if (Model.Count() == 0)
 {
@@ -15,45 +16,6 @@
 else
 {
     <div class="results">
-        @using (@Html.BeginForm("GetApplications", "Application", FormMethod.Get, new { @class = "form-horizontal", id = "filter", role = "form" }))
-        {
-            <div class="form-group">
-                <label class="col-lg-2 control-label">Filter by</label>
-                <div class="col-lg-10">
-                    <div class="radio">
-                        <label>Approved</label>
-                        @if (approved)
-                        {
-                            <input type="checkbox" name="approved" id="approved" checked="checked">
-                        }
-                        else
-                        {
-                            <input type="checkbox" name="approved" id="approved">
-                        }
-                        <br />
-                        <label>Rejected</label>
-                        @if (rejected)
-                        {
-                            <input type="checkbox" name="rejected" id="rejected" checked="checked">
-                        }
-                        else
-                        {
-                            <input type="checkbox" name="rejected" id="rejected">
-                        }
-                        <br />
-                        <label>Not seen</label>
-                        @if (notSeen)
-                        {
-                            <input type="checkbox" name="notSeen" id="notSeen" checked="checked">
-                        }
-                        else
-                        {
-                            <input type="checkbox" name="notSeen" id="notSeen">
-                        }
-                    </div>
-                </div>
-            </div>
-        }
             <ul>
                 @foreach (var item in Model)
                 {
@@ -91,17 +53,17 @@ else
                                     <span class="text-muted"><em>Change status: </em></span>
                                 </div>
                                 @{
-                         string approveBtn = "Approve";
-                         string rejectBtn = "Reject";
-                         string appClass = "btn btn-success btn-xs approveBtn";
-                         string rejClass = "btn btn-danger btn-xs rejectBtn";
-                         if (item.IsApproved != null)
-                         {
-                             approveBtn = item.IsApproved == true ? "Approved" : "Approve";
-                             rejectBtn = item.IsApproved == true ? "Reject" : "Rejected";
-                             appClass += item.IsApproved == true ? " disabled" : "";
-                             rejClass += item.IsApproved == true ? "" : " disabled";
-                         }
+                                     string approveBtn = "Approve";
+                                     string rejectBtn = "Reject";
+                                     string appClass = "btn btn-success btn-xs approveBtn";
+                                     string rejClass = "btn btn-danger btn-xs rejectBtn";
+                                     if (item.IsApproved != null)
+                                     {
+                                         approveBtn = item.IsApproved == true ? "Approved" : "Approve";
+                                         rejectBtn = item.IsApproved == true ? "Reject" : "Rejected";
+                                         appClass += item.IsApproved == true ? " disabled" : "";
+                                         rejClass += item.IsApproved == true ? "" : " disabled";
+                                     }
                                 }
                                 <div class="col-lg-1">
                                     @Ajax.ActionLink(approveBtn, "ChangeStatus", "Application", new { id = item.Id, isApproved = true },

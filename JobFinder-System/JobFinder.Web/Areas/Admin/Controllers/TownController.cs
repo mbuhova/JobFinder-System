@@ -29,7 +29,7 @@ namespace JobFinder.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Read([DataSourceRequest]DataSourceRequest request)
         {
-            var model = this.data.Towns.All().Where(t => !t.IsDeleted)
+            var model = this.data.Towns.All().Where(t => !t.IsDeleted).OrderBy(t => t.Name)
                 .Select(t => new TownViewModel { Id = t.Id, Name = t.Name }).ToDataSourceResult(request, ModelState);
             return this.Json(model);
         }

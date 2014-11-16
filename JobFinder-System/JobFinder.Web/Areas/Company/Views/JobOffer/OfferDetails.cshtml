@@ -17,11 +17,10 @@
                 {
                     HttpMethod = "GET"
                 }, new { @class = buttonClass, id = "expiredButton" })
+        <br/>
+        <strong style="font-size:17px">You can't undo this action.</strong>
         <br />
-        <br />
-        <strong>You can't undo this action.</strong>
-        <br />
-        <span><em>If you mark your offer as expired no one will be able to see it and apply for it.</em></span>
+        <span style="font-size:15px"><em>If you mark your offer as expired no one will be able to see it and apply for it.</em></span>
     </div>
     <div class="col-lg-offset-6">
         @Html.ActionLink("View applications", "GetApplications", "Application", new { area = "Company", id = Model.Id }, new { @class = "btn btn-primary" })

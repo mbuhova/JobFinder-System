@@ -470,6 +470,7 @@
     <Content Include="Areas\Company\Views\Application\GetApplications.cshtml" />
     <Content Include="Areas\Person\Views\FollowedOffers\GetFollowedOffers.cshtml" />
     <Content Include="Areas\Company\Views\JobOffer\_FilterMenuPartial.cshtml" />
+    <Content Include="Areas\Company\Views\Application\_FilterApplicationsMenuPartial.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -1,11 +1,12 @@
 ﻿@model JobFinder.Web.Models.SearchResultOfferViewModel
 
-<div class="row">
+<div class="row alert-success">
     <div class="col-md-3">
         @Html.ActionLink(Model.Title, "OfferDetails", "PublicOffer", new { area = "", id = Model.Id }, new { @class = "btn btn-link offerHeader" })
-        <p class="text-muted"><em>@Model.Town @Html.DisplayFor(m => m.DateCreated)</em></p>
+        <p class="text-muted" style="font-size:17px"><em>@Model.Town @Html.DisplayFor(m => m.DateCreated)</em></p>
     </div>
     <div class="col-md-3">
         @Html.ActionLink(Model.CompanyName, "GetCompanyBusinessCard", "PublicOffer", new { area = "", id = Model.CompanyId }, null)
     </div>
 </div>
+<br/>

@@ -28,7 +28,7 @@ namespace JobFinder.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Read([DataSourceRequest]DataSourceRequest request)
         {
-            var model = this.data.Companies.All()
+            var model = this.data.Companies.All().OrderBy(c => c.CompanyName)
                 .Select(CompanyViewModel.FromCompany).ToDataSourceResult(request, ModelState);
             return this.Json(model);
         }

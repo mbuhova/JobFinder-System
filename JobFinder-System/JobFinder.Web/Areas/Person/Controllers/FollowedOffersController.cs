@@ -23,12 +23,6 @@ namespace JobFinder.Web.Areas.Person.Controllers
 
         }
 
-        // GET: Person/FollowedOffers
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult Follow(int? id)
         {
             JobOffer offer = this.data.JobOffers.Find((int)id);

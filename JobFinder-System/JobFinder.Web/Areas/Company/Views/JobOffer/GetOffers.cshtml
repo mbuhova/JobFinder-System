@@ -4,14 +4,15 @@
     ViewBag.Title = "Offers";
 }
 
+@Html.Partial("_FilterMenuPartial")
+
+
 @if (Model.Count() == 0)
 {
     <div>No job offers found.</div>
 }
 else
-{
-    @Html.Partial("_FilterMenuPartial")
-        
+{    
     <ul>
         @foreach (var offer in Model)
         {

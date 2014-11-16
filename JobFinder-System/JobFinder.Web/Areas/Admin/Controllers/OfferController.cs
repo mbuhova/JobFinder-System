@@ -28,7 +28,7 @@ namespace JobFinder.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Read([DataSourceRequest]DataSourceRequest request)
         {
-            var model = this.data.JobOffers.All()
+            var model = this.data.JobOffers.All().OrderByDescending(o => o.DateCreated)
                 .Select(AdminOfferViewModel.FromJobOffer).ToDataSourceResult(request, ModelState);
             return this.Json(model);
         }

@@ -28,7 +28,7 @@ namespace JobFinder.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Read([DataSourceRequest]DataSourceRequest request)
         {
-            var model = this.data.BusinessSectors.All().Where(s => !s.IsDeleted)
+            var model = this.data.BusinessSectors.All().Where(s => !s.IsDeleted).OrderBy(s => s.Name)
                 .Select(s => new BusinessSectorViewModel { Id = s.Id, Name = s.Name }).ToDataSourceResult(request, ModelState);
             return this.Json(model);
         }

@@ -20,12 +20,6 @@ namespace JobFinder.Web.Areas.Company.Controllers
         {
         }
 
-        // GET: Company/BussinessCard
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult GetBusinessCard()
         {
             string companyId = this.User.Identity.GetUserId();
