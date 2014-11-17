@@ -7,7 +7,7 @@
     columns.Bound(c => c.Id).Hidden();
     columns.Bound(c => c.Title);
     columns.Bound(c => c.Description);
-    columns.Bound(c => c.DateCreated);
+    columns.Bound(c => c.DateCreated).Format("{0:dd-MM-yyyy}");
     columns.Bound(c => c.CompanyName);
     columns.Bound(c => c.IsActive);
     columns.Command(c => c.Edit());
