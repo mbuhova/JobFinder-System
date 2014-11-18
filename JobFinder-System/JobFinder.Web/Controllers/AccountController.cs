@@ -80,8 +80,14 @@ namespace JobFinder.Web.Controllers
 
             if (company != null && !company.IsApproved)
             {
+                UserManager.RemoveFromRole(company.Id, "Company");
                 TempData["NotApproved"] = "You are waiting for approval.";
                 return RedirectToAction("Login", "Account");
+            }
+
+            if (company != null && company.IsApproved)
+            {
+                UserManager.AddToRole(company.Id, "Company");
             }
 
             // This doesn't count login failures towards account lockout

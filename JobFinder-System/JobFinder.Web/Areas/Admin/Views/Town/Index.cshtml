@@ -12,7 +12,6 @@
 })
     .Pageable(page => page.Refresh(true))
     .Sortable()
-    //.Groupable()
             .Editable(edit =>
             {
                 edit.Mode(GridEditMode.PopUp);
@@ -27,16 +26,3 @@
         .Update(update => update.Action("Update", "Town"))
         .Destroy(destroy => destroy.Action("Destroy", "Town")))
     )
-
-
-
-@*.DataSource(data =>
-    data
-        .Ajax()
-        .Model(m => m.Id(adv => adv.Id))
-        .Read(read => read.Action("Read", ControllerName))
-        .Create(create => create.Action("Create", ControllerName))
-        .Update(update => update.Action("Update", ControllerName))
-        .Destroy(destroy => destroy.Action("Destroy", ControllerName))
-        )      //.Filterable()
-    //.Editable(edit => edit.Mode(GridEditMode.PopUp))*@

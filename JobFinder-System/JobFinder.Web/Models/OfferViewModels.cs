@@ -66,7 +66,8 @@ namespace JobFinder.Web.Models
                     Town = o.Town.Name,
                     ApplicationsCount = o.ApplicationsCount,
                     BusinessSector = o.BusinessSector.Name,
-                    IsActive = o.IsActive
+                    IsActive = o.IsActive,
+                    CompanyName = o.Company.CompanyName
                 };
             }
         }
@@ -88,6 +89,8 @@ namespace JobFinder.Web.Models
         public string BusinessSector { get; set; }
 
         public bool IsActive { get; set; }
+
+        public string CompanyName { get; set; }
     }
 
     public class AdminOfferViewModel

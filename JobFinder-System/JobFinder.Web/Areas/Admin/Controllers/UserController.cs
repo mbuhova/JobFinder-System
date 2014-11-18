@@ -9,6 +9,9 @@ using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using JobFinder.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+using System.Web.Security;
 
 namespace JobFinder.Web.Areas.Admin.Controllers
 {
@@ -41,6 +44,14 @@ namespace JobFinder.Web.Areas.Admin.Controllers
                 JobFinder.Models.Company company = this.data.Companies.Find(model.Id);
                 if (company != null)
                 {
+                   // if (model.IsApproved)
+                   // {
+                   //     Roles.AddUserToRole(company.UserName, "Company");
+                   // }
+                   // else
+                   // {
+                   //     Roles.RemoveUserFromRole(company.UserName, "Company");
+                   // }
                     company.IsApproved = model.IsApproved;
                     this.data.Companies.Update(company);
                 }
